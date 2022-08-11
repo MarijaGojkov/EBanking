@@ -40,5 +40,28 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
             }
             return korisnik;
         }
+
+        public bool IsValidKorisnik(string email, string password)
+        {
+            //int idKorisnika;
+            object idKorisnika;
+
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "SELECT * FROM Korisnik WHERE email = @email AND lozinka = @lozinka";
+                    sqlCommand.Parameters.AddWithValue("@email", email);
+                    sqlCommand.Parameters.AddWithValue("@lozinka", password);
+
+                    idKorisnika = sqlCommand.ExecuteScalar();
+                }
+
+            }
+
+            return idKorisnika != null;
+        }
     }
 }
