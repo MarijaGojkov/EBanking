@@ -30,11 +30,36 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
 
         }
 
-        public TekuciRacun GetRacun(TekuciRacun racun)
+        public TekuciRacun GetRacunById(string brojRacuna)
         {
-            throw new NotImplementedException();
-        }
+            TekuciRacun racun = new TekuciRacun();
 
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "SELECT * FROM TekuciRacun WHERE brojRacuna = @brojRacuna";
+                    sqlCommand.Parameters.AddWithValue("@brojRacuna", brojRacuna);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            racun.IdKorisnika = (int)reader["idKorisnika"];
+                            racun.BrojRacuna = reader["brojRacuna"] as string;
+                            racun.Balans = Decimal.ToDouble((decimal)reader["balans"]);
+                            racun.DatumKreiranja = (DateTime)reader["datumKreiranja"];
+                            racun.Tip = reader["tip"] as string;
+                            racun.Valuta = reader["valuta"] as string;
+                        }
+                    }
+                }
+
+            }
+            return racun;
+        }
         public TekuciRacun UpdateBalance(double balans)
         {
             throw new NotImplementedException();

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EBanking.DataAccess\EBanking.DataAccess.csproj" />
+    <ProjectReference Include="..\EBanking.Services\EBanking.Services.csproj" />
   </ItemGroup>
 
 </Project>

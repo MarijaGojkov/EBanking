@@ -5,7 +5,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
     public interface IRepozitorijumRacuna
     {
         void CreateRacun(TekuciRacun model);
-        TekuciRacun GetRacun(TekuciRacun racun);
+        TekuciRacun GetRacunById(string brojRacuna);
         TekuciRacun UpdateBalance(double balans);
     }
 }
