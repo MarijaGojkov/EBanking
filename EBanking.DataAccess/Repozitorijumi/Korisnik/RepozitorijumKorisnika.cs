@@ -11,6 +11,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
         {
             Modeli.Korisnik korisnik = new Modeli.Korisnik();
 
+
             using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
             {
                 sqlConnection.Open();
@@ -63,5 +64,69 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
 
             return idKorisnika != null;
         }
+
+        public List<Modeli.Korisnik> GetAllKorisnici()
+        {
+            List<Modeli.Korisnik> listaKorisnika = new List<Modeli.Korisnik>();
+
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "SELECT * FROM Korisnik";
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            listaKorisnika.Add(new Modeli.Korisnik
+                            {
+                            IdKorisnika = (int)reader["idKorisnika"],
+                            Ime = reader["ime"] as string,
+                            Prezime = reader["prezime"] as string,
+                            DatumRodjenja = (DateTime)reader["datumRodjenja"],
+                            BrojLicneKarte = reader["brojLicneKarte"] as string,
+                            Telefon = reader["telefon"] as string,
+                            Email = reader["email"] as string,
+                            KorisnickiPin = reader["korisnickiPin"] as string,
+                            Lozinka = reader["lozinka"] as string
+                        });
+                        }
+                    }
+                }
+            }
+            return listaKorisnika;
+        }
+
+        public int AddKorisnik(Modeli.Korisnik korisnik)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "INSERT INTO Korisnik(idKorisnika, ime, prezime, datumRodjenja, brojLicneKarte, telefon, email, korisnickiPin, lozinka" +
+                        "VALUES (@idKorisnika, @ime, @prezime, @datumRodjenja, @brojLicneKarte, @telefon, @email, @korisnickiPin, @lozinka)";
+                    sqlCommand.Parameters.AddWithValue("@ime", korisnik.IdKorisnika);
+                    sqlCommand.Parameters.AddWithValue("@ime", korisnik.Ime);
+                    sqlCommand.Parameters.AddWithValue("@prezime", korisnik.Prezime);
+                    sqlCommand.Parameters.AddWithValue("@datumRodjenja", korisnik.DatumRodjenja);
+                    sqlCommand.Parameters.AddWithValue("@brojLicneKarte", korisnik.BrojLicneKarte);
+                    sqlCommand.Parameters.AddWithValue("@telefon", korisnik.Telefon);
+                    sqlCommand.Parameters.AddWithValue("@korisnickiPin", korisnik.KorisnickiPin);
+                    sqlCommand.Parameters.AddWithValue("@lozinka", korisnik.Lozinka);
+
+                    return sqlCommand.ExecuteNonQuery();
+                }
+            }
+
+        }
+
+
+
+
     }
 }
