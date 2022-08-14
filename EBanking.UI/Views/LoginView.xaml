@@ -13,6 +13,7 @@
         <TextBox HorizontalAlignment="Left" Margin="156,148,0,0" TextWrapping="Wrap" Text="{Binding Model.Email, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
         <TextBox HorizontalAlignment="Left" Margin="156,184,0,0" TextWrapping="Wrap" Text="{Binding Model.Password, Mode=TwoWay}" FontFamily="pack://application:,,,/Resources/#password" VerticalAlignment="Top" Width="120"/>
         <Button Command="{Binding LoginCommand}" Content="Login" HorizontalAlignment="Left" Margin="156,235,0,0" VerticalAlignment="Top" Height="26" Width="60"/>
+        <Button Command="{Binding RegistracijaCommand}" Content="Nemate nalog? Aktivirajte ga ovde!" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0,280,0,0" VerticalAlignment="Top" Width="204"/>
 
     </Grid>
 </Window>

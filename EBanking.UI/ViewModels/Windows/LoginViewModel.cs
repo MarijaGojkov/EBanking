@@ -16,9 +16,12 @@ namespace EBanking.UI.ViewModels.Windows
             Model.Title = "Login";
 
             LoginCommand = new RelayCommand(Login);
+            RegistracijaCommand = new RelayCommand(Registracija);
         }
 
         public RelayCommand LoginCommand { get; set; }
+
+        public RelayCommand RegistracijaCommand { get; set; }
 
         public void Login()
         {
@@ -29,6 +32,13 @@ namespace EBanking.UI.ViewModels.Windows
                 tekuciRacunView.Show();
 
             }
+        }
+
+
+        public void Registracija()
+        {
+            RegistracijaView registracijaView = new RegistracijaView();
+            registracijaView.Show();
         }
 
     }

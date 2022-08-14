@@ -110,7 +110,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
                 {
                     sqlCommand.CommandText = "INSERT INTO Korisnik(idKorisnika, ime, prezime, datumRodjenja, brojLicneKarte, telefon, email, korisnickiPin, lozinka" +
                         "VALUES (@idKorisnika, @ime, @prezime, @datumRodjenja, @brojLicneKarte, @telefon, @email, @korisnickiPin, @lozinka)";
-                    sqlCommand.Parameters.AddWithValue("@ime", korisnik.IdKorisnika);
+                    sqlCommand.Parameters.AddWithValue("@idKorisnika", korisnik.IdKorisnika);
                     sqlCommand.Parameters.AddWithValue("@ime", korisnik.Ime);
                     sqlCommand.Parameters.AddWithValue("@prezime", korisnik.Prezime);
                     sqlCommand.Parameters.AddWithValue("@datumRodjenja", korisnik.DatumRodjenja);
