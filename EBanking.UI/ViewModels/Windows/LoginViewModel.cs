@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EBanking.Services.Korisnik;
 using EBanking.UI.Models;
+using EBanking.UI.Views;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -22,6 +23,13 @@ namespace EBanking.UI.ViewModels.Windows
         public void Login()
         {
             bool isTrue = _korisnikService.Login(Model.Email, Model.Password);
+            if(isTrue)
+            {
+                TekuciRacunView tekuciRacunView = new TekuciRacunView();
+                tekuciRacunView.Show();
+
+            }
         }
+
     }
 }
