@@ -125,8 +125,14 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
 
         }
 
+        public void UpdateLozinkeKorisnika(string email, string korisnickiPin, string lozinka)
+        {
+            throw new NotImplementedException();
+        }
 
-
-
+        public bool ProveraKorisnika(string email, string korisnickiPin)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

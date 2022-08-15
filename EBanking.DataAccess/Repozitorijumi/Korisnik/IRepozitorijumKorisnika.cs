@@ -9,5 +9,9 @@
         List<Modeli.Korisnik> GetAllKorisnici();
 
         int AddKorisnik(Modeli.Korisnik korisnik);
+
+        void UpdateLozinkeKorisnika(string email, string korisnickiPin, string lozinka);
+
+        bool ProveraKorisnika(string email, string korisnickiPin);
     }
 }
