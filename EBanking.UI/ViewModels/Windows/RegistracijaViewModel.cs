@@ -36,7 +36,6 @@ namespace EBanking.UI.ViewModels.Windows
                     _korisnikService.UpdateLozinkeKorisnika(Model.Email, Model.KorisnickiPin, Model.Lozinka);
 
                     ShowLoginWindow();
-                    InvokeVMClosed(this, new FrameClosingEventArgs(true, "Authenticated"));
                 }
                 else
                 {
