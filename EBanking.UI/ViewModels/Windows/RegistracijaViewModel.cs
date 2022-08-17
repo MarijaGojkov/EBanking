@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using EBanking.Services.Korisnik;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
+using System;
+using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -14,7 +16,7 @@ namespace EBanking.UI.ViewModels.Windows
         {
             Model.Title = "Registracija";
             _korisnikService = korisnikService;
-            RegistracijaCommand = new RelayCommand(ShowLoginWindow);
+            RegistracijaCommand = new RelayCommand(AktivirajKorisnika);
         }
 
         public RelayCommand RegistracijaCommand { get; set; }
@@ -24,11 +26,28 @@ namespace EBanking.UI.ViewModels.Windows
             LoginView loginView = new LoginView();
             loginView.Show();
         }
-        
-        public void KreirajKorisnika()
 
+        public void AktivirajKorisnika()
+        {
+            if (_korisnikService.ProveraKorisnika(Model.Email, Model.KorisnickiPin))
+            {
+                if (Model.Lozinka.Equals(Model.PonoviLozinku))
+                {
+                    _korisnikService.UpdateLozinkeKorisnika(Model.Email, Model.KorisnickiPin, Model.Lozinka);
 
-
+                    ShowLoginWindow();
+                    InvokeVMClosed(this, new FrameClosingEventArgs(true, "Authenticated"));
+                }
+                else
+                {
+                    Model.Label = "Lozinke se  ne podudaraju";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Korisnicki pin i email se ne podudaraju.", "Greska");
+            }
+        }
     }
 }
 
