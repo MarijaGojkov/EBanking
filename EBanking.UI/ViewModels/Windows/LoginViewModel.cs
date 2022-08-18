@@ -46,14 +46,5 @@ namespace EBanking.UI.ViewModels.Windows
             registracijaView.Show();
             Close();
         }
-
-        private void Close()
-        {
-            foreach (Window item in Application.Current.Windows)
-            {
-                if (item.DataContext == this) item.Close();
-            }
-        }
-
     }
 }
