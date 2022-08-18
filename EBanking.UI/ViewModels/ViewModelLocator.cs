@@ -24,11 +24,13 @@ namespace EBanking.UI.ViewModels
             #region Register Views
             SimpleIoc.Default.Register<RacunViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<RegistracijaViewModel>();
             #endregion
         }
 
         public RacunViewModel RacunView => ServiceLocator.Current.GetInstance<RacunViewModel>();
         public LoginViewModel LoginView => ServiceLocator.Current.GetInstance<LoginViewModel>();
+        public RegistracijaViewModel RegistracijaView => ServiceLocator.Current.GetInstance<RegistracijaViewModel>();
 
         public static void Cleanup() { }
     }

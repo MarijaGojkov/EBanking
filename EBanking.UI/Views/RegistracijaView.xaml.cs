@@ -15,15 +15,14 @@ using System.Windows.Shapes;
 namespace EBanking.UI.Views
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for RegistracijaView.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class RegistracijaView : Window
     {
-        public LoginView()
+        public RegistracijaView()
         {
             InitializeComponent();
         }
-
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;

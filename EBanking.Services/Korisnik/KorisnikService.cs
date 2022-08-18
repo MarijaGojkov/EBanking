@@ -20,5 +20,15 @@ namespace EBanking.Services.Korisnik
         {
             return _repozitorijumKorisnika.IsValidKorisnik(email, password);
         }
+
+        public bool ProveraKorisnika(string email, string korisnickiPin)
+        {
+            return _repozitorijumKorisnika.ProveraKorisnika(email, korisnickiPin);
+        }
+
+        public void UpdateLozinkeKorisnika(string email, string korisnickiPin, string lozinka)
+        {
+            _repozitorijumKorisnika.UpdateLozinkeKorisnika(email, korisnickiPin, lozinka);
+        }
     }
 }
