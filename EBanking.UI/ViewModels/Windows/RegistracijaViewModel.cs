@@ -35,7 +35,9 @@ namespace EBanking.UI.ViewModels.Windows
                 {
                     _korisnikService.UpdateLozinkeKorisnika(Model.Email, Model.KorisnickiPin, Model.Lozinka);
 
-                    ShowLoginWindow();
+                    ShowLoginWindow(); 
+
+                    Close();
                 }
                 else
                 {
