@@ -3,6 +3,7 @@ using EBanking.Services;
 using EBanking.Services.Korisnik;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
+using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -34,6 +35,7 @@ namespace EBanking.UI.ViewModels.Windows
                     DataContext = new RacunViewModel(_racunService, new RacunModel())
                 };
                 tekuciRacunView.Show();
+                Close();
 
             }
         }
@@ -42,6 +44,15 @@ namespace EBanking.UI.ViewModels.Windows
         {
             RegistracijaView registracijaView = new RegistracijaView();
             registracijaView.Show();
+            Close();
+        }
+
+        private void Close()
+        {
+            foreach (Window item in Application.Current.Windows)
+            {
+                if (item.DataContext == this) item.Close();
+            }
         }
 
     }
