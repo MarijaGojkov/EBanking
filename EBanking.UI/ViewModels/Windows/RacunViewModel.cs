@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EBanking.Services;
 using EBanking.UI.Models;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -8,6 +9,7 @@ namespace EBanking.UI.ViewModels.Windows
     {
         private readonly IRacunService _racunService;
 
+        [PreferredConstructor]
         public RacunViewModel(IRacunService racunService)
         {
             GetRacunCommand = new RelayCommand(GetRacun);
@@ -17,7 +19,16 @@ namespace EBanking.UI.ViewModels.Windows
             _racunService = racunService;           
         }
 
+        public RacunViewModel(IRacunService racunService, RacunModel model)
+        {
+            _racunService = racunService;
+            Model = model;
+            GetRacun();
+        }
+
         public RelayCommand GetRacunCommand { get; set; }
+
+        public RacunModel Model { get; set; }
 
         public void GetRacun()
         {

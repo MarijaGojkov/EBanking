@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Resources\password.ttf" />
+    <None Remove="Views\mantra-digital-bank-license-neo-banks.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\password.ttf" />
+    <Resource Include="Views\mantra-digital-bank-license-neo-banks.jpg" />
   </ItemGroup>
 
   <ItemGroup>
