@@ -15,7 +15,7 @@ namespace EBanking.UI.ViewModels.Windows
             GetRacunCommand = new RelayCommand(GetRacun);
 
             Model.Title = "Tekuci racun";
-
+            
             _racunService = racunService;           
         }
 

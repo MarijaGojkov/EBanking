@@ -1,5 +1,6 @@
 ﻿using EBanking.DataAccess.Modeli;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace EBanking.DataAccess.Repozitorijumi.Racun
 {
@@ -60,9 +61,47 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
             }
             return racun;
         }
-        public TekuciRacun UpdateBalance(double balans)
+        public void UpdateBalance(double balans, string brojRacuna)
         {
-            throw new NotImplementedException();
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "UPDATE TekuciRacun SET Balans = @balans WHERE brojRacuna = @brojRacuna";
+                    sqlCommand.Parameters.AddWithValue("@balans", balans);
+                    sqlCommand.Parameters.AddWithValue("@brojRacuna", brojRacuna);
+                    sqlCommand.ExecuteScalar();
+
+                }
+
+            }
+        }
+        public double GetBalance(string brojRacuna) {
+
+            double balans=0;
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "SELECT Balans FROM Korisnik WHERE brojRacuna = @brojRacuna";
+                    sqlCommand.Parameters.AddWithValue("@brojRacuna", brojRacuna);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            balans = (double)reader["Balans"];
+                        }
+                    }
+                }
+
+            }
+
+            return balans;
         }
     }
 }
