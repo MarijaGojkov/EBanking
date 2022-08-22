@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EBanking.UI.Views"
         mc:Ignorable="d"
-        Title="{Binding Model.Title}" Height="550" Width="800"
+        Title="{Binding Model.Title}" Height="600" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
