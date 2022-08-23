@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EBanking.Services.Korisnik;
+using EBanking.UI.Common.Validacija;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
 using System;
@@ -14,6 +15,7 @@ namespace EBanking.UI.ViewModels.Windows
 
         public RegistracijaViewModel(IKorisnikService korisnikService)
         {
+            Validator = new RegistracijaViewValidator<RegistracijaModel>();
             Model.Title = "Registracija";
             _korisnikService = korisnikService;
             RegistracijaCommand = new RelayCommand(AktivirajKorisnika);
@@ -29,7 +31,8 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void AktivirajKorisnika()
         {
-            if (_korisnikService.ProveraKorisnika(Model.Email, Model.KorisnickiPin))
+            Validator.ValidateModel(Model);
+            if (Validator.IsValidModel && _korisnikService.ProveraKorisnika(Model.Email, Model.KorisnickiPin))
             {
                 if (Model.Lozinka.Equals(Model.PonoviLozinku))
                 {

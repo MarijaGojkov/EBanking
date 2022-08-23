@@ -164,6 +164,8 @@
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
+                    <Label Content="{Binding Model.EmailError, Mode=TwoWay}"
+                           Foreground="Red"/>
                     <TextBlock Text="Korisnički pin"
                                Foreground="DarkGray"
                                FontSize="12"
@@ -189,6 +191,8 @@
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
+                    <Label Content="{Binding Model.KorisnickiPinError, Mode=TwoWay}"
+                           Foreground="Red"/>
                     <TextBlock Text="Lozinka"  
                                Foreground="DarkGray"
                                FontSize="12"
@@ -214,6 +218,8 @@
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
+                    <Label Content="{Binding Model.LozinkaError, Mode=TwoWay}"
+                           Foreground="Red"/>
                     <TextBlock Text="Ponovi lozinku"
                                Foreground="DarkGray"
                                FontSize="12"
@@ -239,6 +245,8 @@
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
+                    <Label Content="{Binding Model.PonoviLozinkuError, Mode=TwoWay}"
+                           Foreground="Red"/>
                     <Button Command ="{Binding RegistracijaCommand}"                         
                             BorderThickness="0"
                             Content="REGISTRUJ SE"
