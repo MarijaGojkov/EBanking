@@ -15,7 +15,7 @@
         DataContext="{Binding LoginView, Mode=OneWay, Source={StaticResource Locator}}">
     <Border CornerRadius="12">
         <Border.Background>
-            <ImageBrush ImageSource="C:\Users\Marija\Desktop\background2.jpg"/>
+            <ImageBrush ImageSource="..\Resources\background2.jpg"/>
             
         </Border.Background>
         <Border CornerRadius="10"
@@ -121,7 +121,7 @@
                             Grid.Row="1"
                             Orientation="Vertical"
                             Margin="0,35,0,0">
-                    <Image Source="C:\Users\Marija\Desktop\banklogo.png"
+                    <Image Source="..\Resources\banklogo.png"
                            Width="100" Height="100"/>
                     <TextBlock Text="eBanking"
                                Foreground="White"

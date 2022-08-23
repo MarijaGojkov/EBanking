@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\background2.jpg" />
+    <None Remove="Resources\banklogo.png" />
     <None Remove="Resources\password.ttf" />
-    <None Remove="Views\mantra-digital-bank-license-neo-banks.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,8 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\background2.jpg" />
+    <Resource Include="Resources\banklogo.png" />
     <Resource Include="Resources\password.ttf" />
-    <Resource Include="Views\mantra-digital-bank-license-neo-banks.jpg" />
   </ItemGroup>
 
   <ItemGroup>
