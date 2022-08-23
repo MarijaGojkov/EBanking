@@ -32,7 +32,7 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void GetRacun()
         {
-            Services.Modeli.RacunModel racunModel = _racunService.GetRacun("12131241");
+            Services.Modeli.RacunModel racunModel = _racunService.GetRacun("1112");
 
             Model.BrojRacuna = racunModel.BrojRacuna;
         }

@@ -19,6 +19,10 @@ namespace EBanking.Services
 
             RacunModel result = new RacunModel
             {
+                DatumKreiranja=model.DatumKreiranja,
+                IdKorisnika=model.IdKorisnika,
+                Tip=model.Tip,
+                Valuta=model.Valuta,
                 Balans = model.Balans,
                 BrojRacuna = model.BrojRacuna
             };
