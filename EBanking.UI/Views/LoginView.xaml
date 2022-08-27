@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EBanking.UI.Views"
         mc:Ignorable="d"
-        Title="{Binding Model.Title}" Height="550" Width="800" 
+        Title="{Binding Model.Title}" Height="600" Width="800" 
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -165,6 +165,8 @@
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
+                    <Label Content="{Binding Model.EmailError, Mode=TwoWay}"
+                           Foreground="Red"/>
                     <TextBlock Text="Lozinka"
                                Foreground="DarkGray"
                                FontSize="12"
@@ -190,6 +192,8 @@
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
+                    <Label Content="{Binding Model.PasswordError, Mode=TwoWay}"
+                           Foreground="Red"/>
                     <Button Command ="{Binding LoginCommand}"                         
                             BorderThickness="0"
                             Content="PRIJAVI SE"
