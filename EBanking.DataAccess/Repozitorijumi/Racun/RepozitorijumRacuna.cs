@@ -30,9 +30,9 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
 
         }
 
-        public TekuciRacun GetRacunById(string brojRacuna)
+        public List<TekuciRacun> GetRacuniByKorsnikId(string idKorisnika)
         {
-            TekuciRacun racun = new TekuciRacun();
+            List<TekuciRacun> racuni = new List<TekuciRacun>();
 
             using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
             {
@@ -40,25 +40,38 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
-                    sqlCommand.CommandText = "SELECT * FROM TekuciRacun WHERE brojRacuna = @brojRacuna";
-                    sqlCommand.Parameters.AddWithValue("@brojRacuna", brojRacuna);
+                    sqlCommand.CommandText = "SELECT * FROM TekuciRacun INNER JOIN Korisnik " +
+                        "ON TekuciRacun.idKorisnika = Korisnik.idKorisnika" +
+                        "WHERE TekuciRacun.idKorisnika = @idKorsnika";
+                    sqlCommand.Parameters.AddWithValue("@idKorsnika", idKorisnika);
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            racun.IdKorisnika = (int)reader["idKorisnika"];
-                            racun.BrojRacuna = reader["brojRacuna"] as string;
-                            racun.Balans = Decimal.ToDouble((decimal)reader["balans"]);
-                            racun.DatumKreiranja = (DateTime)reader["datumKreiranja"];
-                            racun.Tip = reader["tip"] as string;
-                            racun.Valuta = reader["valuta"] as string;
+                            racuni.Add(new TekuciRacun
+                            {
+                                IdKorisnika = (int)reader["idKorisnika"],
+                                BrojRacuna = reader["brojRacuna"] as string,
+                                Balans = Decimal.ToDouble((decimal)reader["balans"]),
+                                DatumKreiranja = (DateTime)reader["datumKreiranja"],
+                                Tip = reader["tip"] as string,
+                                Valuta = reader["valuta"] as string,
+                                Korisnik = new Modeli.Korisnik
+                                {
+                                    Ime = reader["ime"] as string,
+                                    Prezime = reader["prezime"] as string,
+                                    DatumRodjenja = (DateTime)reader["datumRodjenja"],
+                                    Email = reader["email"] as string,
+                                    Lozinka = reader["lozinka"] as string
+                                }
+                            });
                         }
                     }
                 }
 
             }
-            return racun;
+            return racuni;
         }
         public TekuciRacun UpdateBalance(double balans)
         {

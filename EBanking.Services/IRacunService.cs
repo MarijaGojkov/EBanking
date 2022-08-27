@@ -4,6 +4,6 @@ namespace EBanking.Services
 {
     public interface IRacunService
     {
-        RacunModel GetRacun(string brojRacuna);
+        List<RacunModel> GetRacunForKorsnik(string IdKorsnika);
     }
 }

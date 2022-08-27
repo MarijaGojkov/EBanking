@@ -2,6 +2,8 @@
 using EBanking.Services;
 using EBanking.UI.Models;
 using GalaSoft.MvvmLight.Ioc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -10,31 +12,27 @@ namespace EBanking.UI.ViewModels.Windows
         private readonly IRacunService _racunService;
 
         [PreferredConstructor]
-        public RacunViewModel(IRacunService racunService)
+        public RacunViewModel()
         {
-            GetRacunCommand = new RelayCommand(GetRacun);
-
-            Model.Title = "Tekuci racun";
-
-            _racunService = racunService;           
+            Model.Title = "Tekuci racun";    
         }
 
-        public RacunViewModel(IRacunService racunService, RacunModel model)
+        public RacunViewModel(IRacunService racunService, string idKorisnika)
         {
+            Model.Title = "Tekuci racun";
             _racunService = racunService;
-            Model = model;
-            GetRacun();
+            IdKorisnika = idKorisnika;
+            GetRacun(idKorisnika);
         }
 
         public RelayCommand GetRacunCommand { get; set; }
+        public string IdKorisnika { get; set; }
 
-        public RacunModel Model { get; set; }
-
-        public void GetRacun()
+        public void GetRacun(string idKorisnika)
         {
-            Services.Modeli.RacunModel racunModel = _racunService.GetRacun("12131241");
+            List<Services.Modeli.RacunModel> racunModel = _racunService.GetRacunForKorsnik(idKorisnika);
 
-            Model.BrojRacuna = racunModel.BrojRacuna;
+            Model.ImeKorsnika = racunModel.First().Korisnik.Ime + " " + racunModel.First().Korisnik.Prezime;
         }
     }
 }

@@ -13,15 +13,33 @@ namespace EBanking.Services
             _repozitorijumRacuna = repozitorijumRacuna;
         }
 
-        public RacunModel GetRacun(string brojRacuna)
+        public List<RacunModel> GetRacunForKorsnik(string idKorisnika)
         {
-            TekuciRacun model = _repozitorijumRacuna.GetRacunById(brojRacuna);
+            List<TekuciRacun> racuni = _repozitorijumRacuna.GetRacuniByKorsnikId(idKorisnika);
 
-            RacunModel result = new RacunModel
+            List<RacunModel> result = new List<RacunModel>();
+
+            foreach(var racun in racuni)
             {
-                Balans = model.Balans,
-                BrojRacuna = model.BrojRacuna
-            };
+                result.Add(new RacunModel
+                {
+                    BrojRacuna = racun.BrojRacuna,
+                    Balans = racun.Balans,
+                    DatumKreiranja = racun.DatumKreiranja,
+                    IdKorisnika = racun.IdKorisnika,
+                    Tip = racun.Tip,
+                    Valuta = racun.Valuta,
+                    Korisnik = new KorisnikModel
+                    {
+                        BrojLicneKarte = racun.Korisnik.BrojLicneKarte,
+                        DatumRodjenja = racun.Korisnik.DatumRodjenja,
+                        Email = racun.Korisnik.Email,
+                        Ime = racun.Korisnik.Ime,
+                        Prezime = racun.Korisnik.Prezime,
+                        Telefon = racun.Korisnik.Telefon,
+                    }
+                });
+            }
 
             return result;
         }

@@ -31,8 +31,8 @@ namespace EBanking.UI.ViewModels.Windows
         {
             if(_korisnikService.Login(Model.Email, Model.Password))
             {
-                TekuciRacunView tekuciRacunView = new TekuciRacunView{
-                    DataContext = new RacunViewModel(_racunService, new RacunModel())
+                RacunView tekuciRacunView = new RacunView{
+                    DataContext = new RacunViewModel(_racunService, string.Empty)
                 };
                 tekuciRacunView.Show();
                 Close();

@@ -8,5 +8,6 @@
         public string Tip { get; set; }
         public string Valuta { get; set; }
         public DateTime DatumKreiranja { get; set; }
+        public Korisnik Korisnik { get; set; }
     }
 }

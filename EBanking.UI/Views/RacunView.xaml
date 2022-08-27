@@ -8,8 +8,8 @@
         DataContext="{Binding RacunView, Source={StaticResource Locator}}"
         Title="{Binding Model.Title}" Height="450" Width="800" >
     <Grid>
-        <Button Command="{Binding GetRacunCommand}" Content="Button" HorizontalAlignment="Left" Height="46" Margin="129,217,0,0" VerticalAlignment="Top" Width="80"/>
-        <Label Content="{Binding Model.BrojRacuna}" HorizontalAlignment="Left" Height="25" Margin="143,81,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Dobro dosli" HorizontalAlignment="Left" Height="25" Margin="103,64,0,0" VerticalAlignment="Top" Width="85"/>
+        <Label Content="{Binding Model.ImeKorsnika}" HorizontalAlignment="Left" Height="24" Margin="188,64,0,0" VerticalAlignment="Top" Width="66"/>
 
     </Grid>
 </Window>
