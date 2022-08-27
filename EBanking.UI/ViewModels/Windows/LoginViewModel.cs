@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EBanking.Services;
 using EBanking.Services.Korisnik;
+using EBanking.UI.Common.Validacija;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
 using System.Windows;
@@ -14,6 +15,7 @@ namespace EBanking.UI.ViewModels.Windows
 
         public LoginViewModel(IKorisnikService korisnikService, IRacunService racunService)
         {
+            Validator = new LoginViewValidator<LoginModel>();
             _korisnikService = korisnikService;
             _racunService = racunService;
 
@@ -29,14 +31,16 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void Login()
         {
-            if(_korisnikService.Login(Model.Email, Model.Password))
+            Validator.ValidateModel(Model);
+
+            if (Validator.IsValidModel && _korisnikService.Login(Model.Email, Model.Password))
             {
-                RacunView tekuciRacunView = new RacunView{
+                RacunView tekuciRacunView = new RacunView
+                {
                     DataContext = new RacunViewModel(_racunService, string.Empty)
                 };
                 tekuciRacunView.Show();
                 Close();
-
             }
         }
 
