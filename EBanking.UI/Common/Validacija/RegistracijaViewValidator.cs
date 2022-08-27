@@ -21,7 +21,7 @@ namespace EBanking.UI.Common.Validacija
 
             if (model.KorisnickiPin == null || model.KorisnickiPin == "")
             {
-                model.KorisnickiPinError = "Niste uneli sifru";
+                model.KorisnickiPinError = "Niste uneli korisnicki pin";
                 IsValidModel = false;
             }
             else
@@ -29,9 +29,10 @@ namespace EBanking.UI.Common.Validacija
                 model.KorisnickiPinError = null;
                 IsValidModel = true;
             }
+
             if (model.Lozinka == null || model.Lozinka == "")
             {
-                model.LozinkaError = "Niste uneli E-mail";
+                model.LozinkaError = "Niste uneli lozinku";
                 IsValidModel = false;
             }
             else
@@ -42,7 +43,7 @@ namespace EBanking.UI.Common.Validacija
 
             if (model.PonoviLozinku == null || model.PonoviLozinku == "")
             {
-                model.PonoviLozinkuError = "Niste uneli sifru";
+                model.PonoviLozinkuError = "Niste uneli ponovo lozinku";
                 IsValidModel = false;
             }
             else

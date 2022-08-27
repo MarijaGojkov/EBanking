@@ -32,25 +32,29 @@ namespace EBanking.UI.ViewModels.Windows
         public void AktivirajKorisnika()
         {
             Validator.ValidateModel(Model);
-            if (Validator.IsValidModel && _korisnikService.ProveraKorisnika(Model.Email, Model.KorisnickiPin))
+
+            if (Validator.IsValidModel)
             {
-                if (Model.Lozinka.Equals(Model.PonoviLozinku))
+                if (_korisnikService.ProveraKorisnika(Model.Email, Model.KorisnickiPin))
                 {
-                    _korisnikService.UpdateLozinkeKorisnika(Model.Email, Model.KorisnickiPin, Model.Lozinka);
+                    if (Model.Lozinka.Equals(Model.PonoviLozinku))
+                    {
+                        _korisnikService.UpdateLozinkeKorisnika(Model.Email, Model.KorisnickiPin, Model.Lozinka);
 
-                    ShowLoginWindow(); 
+                        ShowLoginWindow();
 
-                    Close();
+                        Close();
+                    }
+                    else
+                    {
+                        Model.Label = "Lozinke se  ne podudaraju";
+                    }
                 }
                 else
                 {
-                    Model.Label = "Lozinke se  ne podudaraju";
+                    MessageBox.Show("Korisnicki pin i email se ne podudaraju.", "Greska");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Korisnicki pin i email se ne podudaraju.", "Greska");
-            }
+            } 
         }
     }
 }
