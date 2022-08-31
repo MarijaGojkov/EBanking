@@ -1,7 +1,9 @@
-﻿namespace EBanking.DataAccess
+﻿using System.Configuration;
+
+namespace EBanking.DataAccess
 {
-    public class PristupBazi
+    public static class PristupBazi
     {
-        private const string _konekcioniString = @"Data Source = .;Initial Catalog=eBanking;Integrated Security=True";
+        public static string KonekcioniString = ConfigurationManager.ConnectionStrings["eBankingDB"].ConnectionString;
     }
 }
