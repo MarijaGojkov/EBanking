@@ -72,9 +72,21 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
             }
             return racuni;
         }
-        public TekuciRacun UpdateBalance(double balans)
+        public void UpdateBalance(double balans, string brojRacuna)
         {
-            throw new NotImplementedException();
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "UPDATE TekuciRacun SET balans = @balans WHERE brojRacuna = @brojRacuna";
+                    sqlCommand.Parameters.AddWithValue("@balans", balans);
+                    sqlCommand.Parameters.AddWithValue("@brojRacuna", brojRacuna);
+
+                    sqlCommand.ExecuteScalar();
+                }
+            }
         }
     }
 }

@@ -11,17 +11,20 @@ namespace EBanking.UI.ViewModels.Windows
     {
         private readonly IKorisnikService _korisnikService;
         private readonly IRacunService _racunService;
+        private readonly ITransakcijaService _transakcijaService;
 
-        public LoginViewModel(IKorisnikService korisnikService, IRacunService racunService)
+        public LoginViewModel(IKorisnikService korisnikService, IRacunService racunService, ITransakcijaService transakcijaService)
         {
             Validator = new LoginViewValidator<LoginModel>();
             _korisnikService = korisnikService;
             _racunService = racunService;
+            _transakcijaService = transakcijaService;
 
             Model.Title = "Login";
 
             LoginCommand = new RelayCommand(Login);
             OtvoriRegistracijuCommand = new RelayCommand(Registracija);
+            _transakcijaService = transakcijaService;
         }
 
         public RelayCommand LoginCommand { get; set; }
@@ -38,7 +41,7 @@ namespace EBanking.UI.ViewModels.Windows
             {
                 RacunView tekuciRacunView = new RacunView
                 {
-                    DataContext = new TekuciRacunViewModel(_racunService, idKorisnika)
+                    DataContext = new TekuciRacunViewModel(_racunService, _transakcijaService, idKorisnika)
                 };
                 tekuciRacunView.Show();
                 Close();

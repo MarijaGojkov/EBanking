@@ -5,5 +5,6 @@ namespace EBanking.Services
     public interface IRacunService
     {
         List<RacunModel> GetRacunForKorsnik(int IdKorsnika);
+        void UpdateBalance(double noviBalans, string brojRacuna);
     }
 }

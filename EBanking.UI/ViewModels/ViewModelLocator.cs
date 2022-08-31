@@ -17,20 +17,24 @@ namespace EBanking.UI.ViewModels
             #region Register Services
             SimpleIoc.Default.Register<IRacunService, RacunService>();
             SimpleIoc.Default.Register<IKorisnikService, KorisnikService>();
+            SimpleIoc.Default.Register<ITransakcijaService, TransakcijaService>();
             SimpleIoc.Default.Register<IRepozitorijumTekucegRacuna, RepozitorijumTekucegRacuna>();
             SimpleIoc.Default.Register<IRepozitorijumKorisnika, RepozitorijumKorisnika>();
+            SimpleIoc.Default.Register<IRepozitorijumTransakcija, RepozitorijumTransakcija>();
             #endregion
 
             #region Register Views
             SimpleIoc.Default.Register<TekuciRacunViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegistracijaViewModel>();
+            SimpleIoc.Default.Register<PlacanjeViewModel>();
             #endregion
         }
 
         public TekuciRacunViewModel RacunView => ServiceLocator.Current.GetInstance<TekuciRacunViewModel>();
         public LoginViewModel LoginView => ServiceLocator.Current.GetInstance<LoginViewModel>();
         public RegistracijaViewModel RegistracijaView => ServiceLocator.Current.GetInstance<RegistracijaViewModel>();
+        public PlacanjeViewModel PlacanjeView => ServiceLocator.Current.GetInstance<PlacanjeViewModel>();
 
         public static void Cleanup() { }
     }
