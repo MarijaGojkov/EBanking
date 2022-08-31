@@ -1,8 +1,8 @@
 ﻿using CommonServiceLocator;
-using EBanking.DataAccess.Repozitorijumi.Korisnik;
-using EBanking.DataAccess.Repozitorijumi.Racun;
+using EBanking.DataAccess.Repozitorijumi;
+using EBanking.DataAccess.Repozitorijumi.Implementacija;
 using EBanking.Services;
-using EBanking.Services.Korisnik;
+using EBanking.Services.Implementacija;
 using EBanking.UI.ViewModels.Windows;
 using GalaSoft.MvvmLight.Ioc;
 
@@ -17,18 +17,18 @@ namespace EBanking.UI.ViewModels
             #region Register Services
             SimpleIoc.Default.Register<IRacunService, RacunService>();
             SimpleIoc.Default.Register<IKorisnikService, KorisnikService>();
-            SimpleIoc.Default.Register<IRepozitorijumRacuna, RepozitorijumRacuna>();
+            SimpleIoc.Default.Register<IRepozitorijumTekucegRacuna, RepozitorijumTekucegRacuna>();
             SimpleIoc.Default.Register<IRepozitorijumKorisnika, RepozitorijumKorisnika>();
             #endregion
 
             #region Register Views
-            SimpleIoc.Default.Register<RacunViewModel>();
+            SimpleIoc.Default.Register<TekuciRacunViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegistracijaViewModel>();
             #endregion
         }
 
-        public RacunViewModel RacunView => ServiceLocator.Current.GetInstance<RacunViewModel>();
+        public TekuciRacunViewModel RacunView => ServiceLocator.Current.GetInstance<TekuciRacunViewModel>();
         public LoginViewModel LoginView => ServiceLocator.Current.GetInstance<LoginViewModel>();
         public RegistracijaViewModel RegistracijaView => ServiceLocator.Current.GetInstance<RegistracijaViewModel>();
 

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EBanking.Services;
-using EBanking.Services.Korisnik;
 using EBanking.UI.Common.Validacija;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
@@ -33,11 +32,13 @@ namespace EBanking.UI.ViewModels.Windows
         {
             Validator.ValidateModel(Model);
 
-            if (Validator.IsValidModel && _korisnikService.Login(Model.Email, Model.Password))
+            var idKorisnika = _korisnikService.Login(Model.Email, Model.Password);
+
+            if (Validator.IsValidModel && idKorisnika is not 0)
             {
                 RacunView tekuciRacunView = new RacunView
                 {
-                    DataContext = new RacunViewModel(_racunService, string.Empty)
+                    DataContext = new TekuciRacunViewModel(_racunService, idKorisnika)
                 };
                 tekuciRacunView.Show();
                 Close();

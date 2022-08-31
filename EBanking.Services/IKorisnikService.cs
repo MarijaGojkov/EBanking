@@ -1,8 +1,8 @@
-﻿namespace EBanking.Services.Korisnik
+﻿namespace EBanking.Services
 {
     public interface IKorisnikService
     {
-        bool Login(string email, string password);
+        int Login(string email, string password);
 
         void UpdateLozinkeKorisnika(string email, string korisnickiPin, string lozinka);
 

@@ -1,10 +1,10 @@
-﻿namespace EBanking.DataAccess.Repozitorijumi.Korisnik
+﻿namespace EBanking.DataAccess.Repozitorijumi
 {
     public interface IRepozitorijumKorisnika
     {
         Modeli.Korisnik GetKorisnikById(int id);
 
-        bool IsValidKorisnik(string email, string password);
+        int IsValidKorisnik(string email, string password);
 
         List<Modeli.Korisnik> GetAllKorisnici();
 

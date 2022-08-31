@@ -1,25 +1,26 @@
 ﻿using EBanking.DataAccess.Modeli;
-using EBanking.DataAccess.Repozitorijumi.Racun;
+using EBanking.DataAccess.Repozitorijumi;
 using EBanking.Services.Modeli;
 
-namespace EBanking.Services
+namespace EBanking.Services.Implementacija
 {
     public class RacunService : IRacunService
     {
-        private readonly IRepozitorijumRacuna _repozitorijumRacuna;
+        private readonly IRepozitorijumTekucegRacuna _repozitorijumRacuna;
 
-        public RacunService(IRepozitorijumRacuna repozitorijumRacuna)
+        public RacunService(IRepozitorijumTekucegRacuna repozitorijumRacuna)
         {
             _repozitorijumRacuna = repozitorijumRacuna;
         }
 
-        public List<RacunModel> GetRacunForKorsnik(string idKorisnika)
+        //Pozivamo repo za izvlacenje racuna i mapiramo ih na modele u sloju servisa
+        public List<RacunModel> GetRacunForKorsnik(int idKorisnika)
         {
             List<TekuciRacun> racuni = _repozitorijumRacuna.GetRacuniByKorsnikId(idKorisnika);
 
             List<RacunModel> result = new List<RacunModel>();
 
-            foreach(var racun in racuni)
+            foreach (var racun in racuni)
             {
                 result.Add(new RacunModel
                 {

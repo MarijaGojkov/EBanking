@@ -1,15 +1,15 @@
 ﻿using EBanking.DataAccess.Modeli;
 using System.Data.SqlClient;
 
-namespace EBanking.DataAccess.Repozitorijumi.Korisnik
+namespace EBanking.DataAccess.Repozitorijumi.Implementacija
 {
     public class RepozitorijumKorisnika : IRepozitorijumKorisnika
     {
         private const string _konekcioniString = @"Data Source = .\SQLEXPRESS;Initial Catalog=eBanking;Integrated Security=True";
 
-        public Modeli.Korisnik GetKorisnikById(int id)
+        public Korisnik GetKorisnikById(int id)
         {
-            Modeli.Korisnik korisnik = new Modeli.Korisnik();
+            Korisnik korisnik = new Korisnik();
 
 
             using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
@@ -42,7 +42,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
             return korisnik;
         }
 
-        public bool IsValidKorisnik(string email, string password)
+        public int IsValidKorisnik(string email, string password)
         {
             object idKorisnika;
 
@@ -61,12 +61,12 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
 
             }
 
-            return idKorisnika != null;
+            return (int)idKorisnika;
         }
 
-        public List<Modeli.Korisnik> GetAllKorisnici()
+        public List<Korisnik> GetAllKorisnici()
         {
-            List<Modeli.Korisnik> listaKorisnika = new List<Modeli.Korisnik>();
+            List<Korisnik> listaKorisnika = new List<Korisnik>();
 
             using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
             {
@@ -80,18 +80,18 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
                     {
                         while (reader.Read())
                         {
-                            listaKorisnika.Add(new Modeli.Korisnik
+                            listaKorisnika.Add(new Korisnik
                             {
-                            IdKorisnika = (int)reader["idKorisnika"],
-                            Ime = reader["ime"] as string,
-                            Prezime = reader["prezime"] as string,
-                            DatumRodjenja = (DateTime)reader["datumRodjenja"],
-                            BrojLicneKarte = reader["brojLicneKarte"] as string,
-                            Telefon = reader["telefon"] as string,
-                            Email = reader["email"] as string,
-                            KorisnickiPin = reader["korisnickiPin"] as string,
-                            Lozinka = reader["lozinka"] as string
-                        });
+                                IdKorisnika = (int)reader["idKorisnika"],
+                                Ime = reader["ime"] as string,
+                                Prezime = reader["prezime"] as string,
+                                DatumRodjenja = (DateTime)reader["datumRodjenja"],
+                                BrojLicneKarte = reader["brojLicneKarte"] as string,
+                                Telefon = reader["telefon"] as string,
+                                Email = reader["email"] as string,
+                                KorisnickiPin = reader["korisnickiPin"] as string,
+                                Lozinka = reader["lozinka"] as string
+                            });
                         }
                     }
                 }
@@ -99,7 +99,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
             return listaKorisnika;
         }
 
-        public int AddKorisnik(Modeli.Korisnik korisnik)
+        public int AddKorisnik(Korisnik korisnik)
         {
             using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
             {
@@ -126,7 +126,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Korisnik
 
         public void UpdateLozinkeKorisnika(string email, string korisnickiPin, string lozinka)
         {
-           
+
 
             using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
             {

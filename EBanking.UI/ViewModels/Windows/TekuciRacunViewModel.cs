@@ -7,17 +7,17 @@ using System.Linq;
 
 namespace EBanking.UI.ViewModels.Windows
 {
-    public class RacunViewModel : BaseViewModel<RacunModel>
+    public class TekuciRacunViewModel : BaseViewModel<TekuciRacunModel>
     {
         private readonly IRacunService _racunService;
 
         [PreferredConstructor]
-        public RacunViewModel()
+        public TekuciRacunViewModel()
         {
             Model.Title = "Tekuci racun";    
         }
 
-        public RacunViewModel(IRacunService racunService, string idKorisnika)
+        public TekuciRacunViewModel(IRacunService racunService, int idKorisnika)
         {
             Model.Title = "Tekuci racun";
             _racunService = racunService;
@@ -26,13 +26,14 @@ namespace EBanking.UI.ViewModels.Windows
         }
 
         public RelayCommand GetRacunCommand { get; set; }
-        public string IdKorisnika { get; set; }
+        public int IdKorisnika { get; set; }
 
-        public void GetRacun(string idKorisnika)
+        // Metoda koja se poziva pri otvaranju prozora koja nam daje sve informacije o racunima za korisnika
+        public void GetRacun(int idKorisnika)
         {
-            List<Services.Modeli.RacunModel> racunModel = _racunService.GetRacunForKorsnik(idKorisnika);
+            Model.Racuni = _racunService.GetRacunForKorsnik(idKorisnika);
 
-            Model.ImeKorsnika = racunModel.First().Korisnik.Ime + " " + racunModel.First().Korisnik.Prezime;
+            Model.ImeKorsnika = Model.Racuni.First().Korisnik.Ime + " " + Model.Racuni.First().Korisnik.Prezime;
         }
     }
 }

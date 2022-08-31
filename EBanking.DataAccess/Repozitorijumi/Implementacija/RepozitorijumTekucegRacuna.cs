@@ -1,9 +1,9 @@
 ﻿using EBanking.DataAccess.Modeli;
 using System.Data.SqlClient;
 
-namespace EBanking.DataAccess.Repozitorijumi.Racun
+namespace EBanking.DataAccess.Repozitorijumi.Implementacija
 {
-    public class RepozitorijumRacuna : IRepozitorijumRacuna
+    public class RepozitorijumTekucegRacuna : IRepozitorijumTekucegRacuna
     {
         private const string _konekcioniString = @"Data Source = .\SQLEXPRESS;Initial Catalog=eBanking;Integrated Security=True";
 
@@ -30,7 +30,8 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
 
         }
 
-        public List<TekuciRacun> GetRacuniByKorsnikId(string idKorisnika)
+        //Vraca listu racuna za korisnika, svaki racun u sebi ima informacije o korinsiku
+        public List<TekuciRacun> GetRacuniByKorsnikId(int idKorisnika)
         {
             List<TekuciRacun> racuni = new List<TekuciRacun>();
 
@@ -40,10 +41,8 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
-                    sqlCommand.CommandText = "SELECT * FROM TekuciRacun INNER JOIN Korisnik " +
-                        "ON TekuciRacun.idKorisnika = Korisnik.idKorisnika" +
-                        "WHERE TekuciRacun.idKorisnika = @idKorsnika";
-                    sqlCommand.Parameters.AddWithValue("@idKorsnika", idKorisnika);
+                    sqlCommand.CommandText = "SELECT * FROM TekuciRacun INNER JOIN Korisnik ON TekuciRacun.idKorisnika = Korisnik.idKorisnika WHERE Korisnik.idKorisnika = @idKorisnika";
+                    sqlCommand.Parameters.AddWithValue("@idKorisnika", idKorisnika);
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
@@ -53,11 +52,11 @@ namespace EBanking.DataAccess.Repozitorijumi.Racun
                             {
                                 IdKorisnika = (int)reader["idKorisnika"],
                                 BrojRacuna = reader["brojRacuna"] as string,
-                                Balans = Decimal.ToDouble((decimal)reader["balans"]),
+                                Balans = decimal.ToDouble((decimal)reader["balans"]),
                                 DatumKreiranja = (DateTime)reader["datumKreiranja"],
                                 Tip = reader["tip"] as string,
                                 Valuta = reader["valuta"] as string,
-                                Korisnik = new Modeli.Korisnik
+                                Korisnik = new Korisnik
                                 {
                                     Ime = reader["ime"] as string,
                                     Prezime = reader["prezime"] as string,
