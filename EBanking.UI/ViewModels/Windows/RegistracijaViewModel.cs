@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EBanking.Services.Korisnik;
+using EBanking.Services;
 using EBanking.UI.Common.Validacija;
 using EBanking.UI.Models;
 using EBanking.UI.Views;

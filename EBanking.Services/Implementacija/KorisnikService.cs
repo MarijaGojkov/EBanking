@@ -1,11 +1,6 @@
-﻿using EBanking.DataAccess.Repozitorijumi.Korisnik;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EBanking.DataAccess.Repozitorijumi;
 
-namespace EBanking.Services.Korisnik
+namespace EBanking.Services.Implementacija
 {
     public class KorisnikService : IKorisnikService
     {
@@ -16,7 +11,7 @@ namespace EBanking.Services.Korisnik
             _repozitorijumKorisnika = repozitorijumKorisnika;
         }
 
-        public bool Login(string email, string password)
+        public int Login(string email, string password)
         {
             return _repozitorijumKorisnika.IsValidKorisnik(email, password);
         }

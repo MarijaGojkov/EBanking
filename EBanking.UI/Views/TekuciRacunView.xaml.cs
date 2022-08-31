@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace EBanking.UI.Views
 {
     /// <summary>
-    /// Interaction logic for TekuciRacunView.xaml
+    /// Interaction logic for RacunView.xaml
     /// </summary>
-    public partial class TekuciRacunView : Window
+    public partial class RacunView : Window
     {
-        public TekuciRacunView()
+        public RacunView()
         {
             InitializeComponent();
         }
