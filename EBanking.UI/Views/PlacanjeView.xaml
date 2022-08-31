@@ -1,0 +1,27 @@
+﻿<Window x:Class="EBanking.UI.Views.PlacanjeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EBanking.UI.Views"
+        mc:Ignorable="d"
+        DataContext="{Binding PlacanjeView, Source={StaticResource Locator}}"
+        Title="{Binding Model.Title}" Height="600" Width="400" >
+    <Grid>
+        <TextBox Text="{Binding Model.NazivPrimaoca, Mode=TwoWay}" HorizontalAlignment="Left" Margin="63,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="248"/>
+        <TextBox Text="{Binding Model.BrojRacunaPrimaoca, Mode=TwoWay}" HorizontalAlignment="Left" Margin="63,187,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="248"/>
+        <TextBox Text="{Binding Model.PozivNaBroj, Mode=TwoWay}" HorizontalAlignment="Left" Margin="63,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="248"/>
+        <TextBox Text="{Binding Model.KolicinaNovca, Mode=TwoWay}" HorizontalAlignment="Left" Margin="63,292,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="248"/>
+        <TextBox Text="{Binding Model.SvrhaPlacanja, Mode=TwoWay}" HorizontalAlignment="Left" Margin="63,352,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="248"/>
+        <Label Content="Naziv" HorizontalAlignment="Left" Margin="63,112,0,0" VerticalAlignment="Top"/>
+        <Label Content="Broj Racuna" HorizontalAlignment="Left" Margin="63,161,0,0" VerticalAlignment="Top"/>
+        <Label Content="Poziv na broj" HorizontalAlignment="Left" Margin="63,210,0,0" VerticalAlignment="Top"/>
+        <Label Content="Iznos" HorizontalAlignment="Left" Margin="63,266,0,0" VerticalAlignment="Top"/>
+        <Label Content="Svrha placanja" HorizontalAlignment="Left" Margin="63,326,0,0" VerticalAlignment="Top"/>
+        <Label Content="PRIMALAC" HorizontalAlignment="Left" Margin="63,86,0,0" VerticalAlignment="Top"/>
+        <Label Content="Sa racuna" HorizontalAlignment="Left" Margin="66,19,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Model.BrojRacunaPlatioca}" HorizontalAlignment="Left" Margin="76,50,0,0" VerticalAlignment="Top"/>
+        <Button Content="Plati" Command="{Binding PlacanjeCommand}" HorizontalAlignment="Left" Margin="170,473,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

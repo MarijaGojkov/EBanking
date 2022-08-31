@@ -44,5 +44,10 @@ namespace EBanking.Services.Implementacija
 
             return result;
         }
+
+        public void UpdateBalance(double noviBalans, string brojRacuna)
+        {
+            _repozitorijumRacuna.UpdateBalance(noviBalans, brojRacuna);
+        }
     }
 }

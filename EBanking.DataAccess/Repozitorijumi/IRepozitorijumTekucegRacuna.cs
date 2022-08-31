@@ -6,6 +6,6 @@ namespace EBanking.DataAccess.Repozitorijumi
     {
         void CreateRacun(TekuciRacun model);
         List<TekuciRacun> GetRacuniByKorsnikId(int idKorisnika);
-        TekuciRacun UpdateBalance(double balans);
+        void UpdateBalance(double balans, string brojRacuna);
     }
 }

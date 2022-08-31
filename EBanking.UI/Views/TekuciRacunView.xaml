@@ -22,5 +22,7 @@
                 <DataGridTextColumn Header="Valuta" IsReadOnly="true" Binding="{Binding Valuta}" Width="1.5*"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Novo placanje" Command="{Binding PlacanjeCommand}" HorizontalAlignment="Left" Margin="734,521,0,0" VerticalAlignment="Top" Height="28" Width="85"/>
+        <Label Content="{Binding Model.IzabranRacun.Balans}" HorizontalAlignment="Left" Margin="542,115,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
