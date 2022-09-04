@@ -33,11 +33,9 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void Login()
         {
-            Validator.ValidateModel(Model);
-
             var idKorisnika = _korisnikService.Login(Model.Email, Model.Password);
 
-            if (Validator.IsValidModel && idKorisnika is not 0)
+            if (Validator.ValidateModel(Model) && idKorisnika is not 0)
             {
                 RacunView tekuciRacunView = new RacunView
                 {

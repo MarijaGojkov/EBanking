@@ -3,8 +3,6 @@
     public interface IValidator<TModel>
     {
 
-        void ValidateModel(TModel model);
-
-        bool IsValidModel { get; set; }
+        bool ValidateModel(TModel model);
     }
 }

@@ -15,7 +15,7 @@ namespace EBanking.UI.ViewModels.Windows
 
         public RegistracijaViewModel(IKorisnikService korisnikService)
         {
-            Validator = new RegistracijaViewValidator<RegistracijaModel>();
+           // Validator = new RegistracijaViewValidator<RegistracijaModel>();
             Model.Title = "Registracija";
             _korisnikService = korisnikService;
             RegistracijaCommand = new RelayCommand(AktivirajKorisnika);
@@ -31,9 +31,7 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void AktivirajKorisnika()
         {
-            Validator.ValidateModel(Model);
-
-            if (Validator.IsValidModel)
+            if (Validator.ValidateModel(Model))
             {
                 if (_korisnikService.ProveraKorisnika(Model.Email, Model.KorisnickiPin))
                 {

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using EBanking.Services;
 using EBanking.Services.Modeli;
+using EBanking.UI.Common.Validacija;
 using EBanking.UI.Models;
 using GalaSoft.MvvmLight.Ioc;
 using System;
@@ -19,6 +20,7 @@ namespace EBanking.UI.ViewModels.Windows
 
         public PlacanjeViewModel(ITransakcijaService transakcijaService, IRacunService racunService, TransakcijaInfo transakcijaInfo)
         {
+            Validator = new PlacanjeViewValidator<PlacanjeModel>();
             _transakcijaService = transakcijaService;
             _racunService = racunService;
             Model.Title = "Novo Placanje";
@@ -31,19 +33,22 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void Plati()
         {
-            _transakcijaService.CreateTransakcija(new TransakcijaModel
+            if (Validator.ValidateModel(Model))
             {
-                BrojRacuna = Model.BrojRacunaPlatioca,
-                KolicinaNovca = Model.KolicinaNovca,
-                BrojRacunaSekundarnogAktera = Model.BrojRacunaPrimaoca,
-                NazivSekundarnogAktera = Model.NazivPrimaoca,
-                BalansNakonTransakcije = Model.TrenutnoStanje - Model.KolicinaNovca,
-                Datum = System.DateTime.UtcNow
+                _transakcijaService.CreateTransakcija(new TransakcijaModel
+                {
+                    BrojRacuna = Model.BrojRacunaPlatioca,
+                    KolicinaNovca = Model.KolicinaNovca,
+                    BrojRacunaSekundarnogAktera = Model.BrojRacunaPrimaoca,
+                    NazivSekundarnogAktera = Model.NazivPrimaoca,
+                    BalansNakonTransakcije = Model.TrenutnoStanje - Model.KolicinaNovca,
+                    Datum = System.DateTime.UtcNow
+                   
             });
 
-            _racunService.UpdateBalance(Model.TrenutnoStanje - Model.KolicinaNovca, Model.BrojRacunaPlatioca);
-
-            Close();
+                _racunService.UpdateBalance(Model.TrenutnoStanje - Model.KolicinaNovca, Model.BrojRacunaPlatioca);
+                Close();
+            }
         }
     }
 }
