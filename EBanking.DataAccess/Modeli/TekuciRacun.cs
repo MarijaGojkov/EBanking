@@ -9,5 +9,7 @@
         public string Valuta { get; set; }
         public DateTime DatumKreiranja { get; set; }
         public Korisnik Korisnik { get; set; }
+
+        public List<Transakcija> Transakcije { get; set; }
     }
 }
