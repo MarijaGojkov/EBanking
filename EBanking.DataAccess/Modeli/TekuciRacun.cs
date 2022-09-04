@@ -10,6 +10,6 @@
         public DateTime DatumKreiranja { get; set; }
         public Korisnik Korisnik { get; set; }
 
-        public List<Transakcija> transakcije { get; set; }
+        public List<Transakcija> Transakcije { get; set; }
     }
 }

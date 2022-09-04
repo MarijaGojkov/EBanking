@@ -5,7 +5,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
 {
     public class RepozitorijumTekucegRacuna : IRepozitorijumTekucegRacuna
     {
-        private const string _konekcioniString = @"Data Source = .\SQLEXPRESS01;Initial Catalog=eBanking;Integrated Security=True";
+        private const string _konekcioniString = @"Data Source = .\SQLEXPRESS;Initial Catalog=eBanking;Integrated Security=True";
 
         public void CreateRacun(TekuciRacun model)
         {

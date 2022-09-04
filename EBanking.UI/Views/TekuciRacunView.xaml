@@ -24,13 +24,14 @@
         </DataGrid>
         <Button Content="Novo placanje" Command="{Binding PlacanjeCommand}" HorizontalAlignment="Left" Margin="734,521,0,0" VerticalAlignment="Top" Height="28" Width="85"/>
         <Label Content="{Binding Model.IzabranRacun.Balans}" HorizontalAlignment="Left" Margin="542,115,0,0" VerticalAlignment="Top"/>
-        <DataGrid ItemsSource="{Binding Model.Transakcije, Mode=TwoWay}" SelectedItem="{Binding Model.Transakcije, Mode=TwoWay}" MaxHeight="300" FontSize="15" IsSynchronizedWithCurrentItem="True" x:Name="GridRacuni_Copy" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,271,564,216" VerticalScrollBarVisibility="Auto"
+        <DataGrid ItemsSource="{Binding Model.IzabranRacun.Transakcije, Mode=TwoWay}" SelectedItem="{Binding Model.Transakcije, Mode=TwoWay}" MaxHeight="300" FontSize="15" IsSynchronizedWithCurrentItem="True" x:Name="GridRacuni_Copy" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,271,486,89" VerticalScrollBarVisibility="Auto"
             ScrollViewer.CanContentScroll="True" 
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Broj racuna" IsReadOnly="true" Binding="{Binding BrojRacuna}" Width="1.5*"/>
                 <DataGridTextColumn Header="Kolicina Novca" IsReadOnly="true" Binding="{Binding KolicinaNovca}" Width="1.5*"/>
-                <DataGridTextColumn Header="DatumKreiranja" IsReadOnly="true" Binding="{Binding DatumKreiranja }" Width="1.5*"/>
+                <DataGridTextColumn Header="DatumKreiranja" IsReadOnly="true" Binding="{Binding Datum}" Width="1.5*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Vase transakcije " HorizontalAlignment="Left" Height="25" Margin="120,241,0,0" VerticalAlignment="Top" Width="96"/>
