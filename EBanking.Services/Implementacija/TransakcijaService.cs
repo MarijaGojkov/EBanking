@@ -1,6 +1,7 @@
 ﻿using EBanking.DataAccess.Modeli;
 using EBanking.DataAccess.Repozitorijumi;
 using EBanking.Services.Modeli;
+using System.Collections.Generic;
 
 namespace EBanking.Services.Implementacija
 {
@@ -26,5 +27,26 @@ namespace EBanking.Services.Implementacija
                 Datum = transakcijaModel.Datum
             });
         }
+        public List<TransakcijaModel> GetTransakcijeByBrojRacuna(string brojRacuna) {
+            List<Transakcija> listaTransakcija = new List<Transakcija>();
+            List<TransakcijaModel> result = new List<TransakcijaModel>();
+            listaTransakcija = _repozitorijumTransakcija.GetTransakcijeByBrojRacuna(brojRacuna);
+            foreach (Transakcija transakcija in listaTransakcija) {
+                result.Add(new TransakcijaModel {
+                    IdTransakcije = transakcija.IdTransakcije,
+                    BrojRacuna = transakcija.BrojRacuna,
+                    BrojKartice = transakcija.BrojKartice,
+                    KolicinaNovca = transakcija.KolicinaNovca,
+                    BalansNakonTransakcije = transakcija.BalansNakonTransakcije,
+                    Datum = transakcija.Datum,
+             NazivSekundarnogAktera = transakcija.NazivSekundarnogAktera,
+             BrojRacunaSekundarnogAktera = transakcija.BrojRacunaSekundarnogAktera,
+                
+                }) ;       
+                                                }
+            return result;
+        }
+
+
     }
 }

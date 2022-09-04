@@ -29,7 +29,7 @@ namespace EBanking.UI.ViewModels.Windows
             _transakcijaService = transakcijaService;
             IdKorisnika = idKorisnika;
             GetRacun(idKorisnika);
-
+            GetTransakcija(Model.Racuni.FirstOrDefault().BrojRacuna);
             PlacanjeCommand = new RelayCommand(Placanje);
         }
 
@@ -42,6 +42,10 @@ namespace EBanking.UI.ViewModels.Windows
             Model.Racuni = _racunService.GetRacunForKorsnik(idKorisnika);
 
             Model.ImeKorsnika = Model.Racuni.First().Korisnik.Ime + " " + Model.Racuni.First().Korisnik.Prezime;
+        }
+        public void GetTransakcija(string brojRacuna)
+        {
+            Model.Transakcije = _transakcijaService.GetTransakcijeByBrojRacuna(brojRacuna);
         }
 
         public async void Placanje()

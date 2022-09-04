@@ -5,7 +5,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
 {
     public class RepozitorijumTransakcija : IRepozitorijumTransakcija
     {
-        private const string _konekcioniString = @"Data Source = .\SQLEXPRESS;Initial Catalog=eBanking;Integrated Security=True";
+        private const string _konekcioniString = @"Data Source = .\SQLEXPRESS01;Initial Catalog=eBanking;Integrated Security=True";
 
         public int CreateTransakcija(Transakcija transakcija)
         {
@@ -40,8 +40,8 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
-                    sqlCommand.CommandText = "SELECT * FROM Korisnik";
-
+                    sqlCommand.CommandText = "SELECT * FROM Transakcija WHERE brojRacuna = @brojRacuna";
+                    sqlCommand.Parameters.AddWithValue("@brojRacuna",brojRacuna);
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
                         while (reader.Read())
@@ -51,8 +51,8 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
                                 IdTransakcije = (int)reader["idTransakcije"],
                                 BrojKartice = reader["brojKartice"] as string,
                                 BrojRacuna = reader["brojRacuna"] as string,
-                                KolicinaNovca = (double)reader["kolicinaNovca"],
-                                BalansNakonTransakcije = (double)reader["balansNakonTransakcije"],
+                                KolicinaNovca = decimal.ToDouble((decimal)reader["kolicinaNovca"]),
+                                BalansNakonTransakcije = decimal.ToDouble((decimal)reader["balansNakonTransakcije"]),
                                 Datum = (DateTime)reader["datum"],
                                 NazivSekundarnogAktera = reader["nazivSekundarnogAktera"] as string,
                                 BrojRacunaSekundarnogAktera = reader["brojRacunaSekundarnogAktera"] as string
