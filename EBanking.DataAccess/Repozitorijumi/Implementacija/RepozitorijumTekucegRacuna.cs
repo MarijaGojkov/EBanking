@@ -30,6 +30,38 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
 
         }
 
+        public async Task<TekuciRacun> GetRacunByBrojRacuna(string brojRacuna)
+        {
+            TekuciRacun racun = new TekuciRacun();
+
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "SELECT * FROM TekuciRacun WHERE brojRacuna = @brojRacuna";
+                    sqlCommand.Parameters.AddWithValue("@brojRacuna", brojRacuna);
+
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            racun.IdKorisnika = (int)reader["idKorisnika"];
+                            racun.BrojRacuna = reader["brojRacuna"] as string;
+                            racun.Balans = decimal.ToDouble((decimal)reader["balans"]);
+                            racun.DatumKreiranja = (DateTime)reader["datumKreiranja"];
+                            racun.Tip = reader["tip"] as string;
+                            racun.Valuta = reader["valuta"] as string;
+                        }
+                    }
+                }
+
+            }
+
+            return racun;
+        }
+
         //Vraca listu racuna za korisnika, svaki racun u sebi ima informacije o korinsiku
         public List<TekuciRacun> GetRacuniByKorsnikId(int idKorisnika)
         {
@@ -72,6 +104,27 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
             }
             return racuni;
         }
+
+        public bool IsValidRacun(string brojRacuna)
+        {
+            object idRacuna;
+
+            using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))
+            {
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                {
+                    sqlCommand.CommandText = "SELECT * FROM TekuciRacun WHERE brojRacuna = @brojRacuna";
+                    sqlCommand.Parameters.AddWithValue("@brojRacuna", brojRacuna);
+
+                    idRacuna = sqlCommand.ExecuteScalar();
+                }
+            }
+
+            return idRacuna as string is not null;
+        }
+
         public void UpdateBalance(double balans, string brojRacuna)
         {
             using (SqlConnection sqlConnection = new SqlConnection(_konekcioniString))

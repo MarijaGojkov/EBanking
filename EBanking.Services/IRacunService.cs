@@ -6,5 +6,7 @@ namespace EBanking.Services
     {
         List<RacunModel> GetRacunForKorsnik(int IdKorsnika);
         void UpdateBalance(double noviBalans, string brojRacuna);
+        bool IsValidRacun(string brojRacuna);
+        Task<RacunModel> GetRacunByBrojRacuna(string brojRacuna);
     }
 }
