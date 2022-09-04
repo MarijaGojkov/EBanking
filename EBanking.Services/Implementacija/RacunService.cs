@@ -15,6 +15,21 @@ namespace EBanking.Services.Implementacija
             _repozitorijumTransakcija = repozitorijumTransakcija;
         }
 
+        public async Task<RacunModel> GetRacunByBrojRacuna(string brojRacuna)
+        {
+            TekuciRacun racun = await _repozitorijumRacuna.GetRacunByBrojRacuna(brojRacuna);
+
+            return new RacunModel
+            {
+                BrojRacuna = racun.BrojRacuna,
+                Balans = racun.Balans,
+                DatumKreiranja = racun.DatumKreiranja,
+                IdKorisnika = racun.IdKorisnika,
+                Tip = racun.Tip,
+                Valuta = racun.Valuta
+            };
+        }
+
         //Pozivamo repo za izvlacenje racuna i mapiramo ih na modele u sloju servisa
         public List<RacunModel> GetRacunForKorsnik(int idKorisnika)
         {
@@ -66,6 +81,11 @@ namespace EBanking.Services.Implementacija
             }
 
             return result;
+        }
+
+        public bool IsValidRacun(string brojRacuna)
+        {
+            return _repozitorijumRacuna.IsValidRacun(brojRacuna);
         }
 
         public void UpdateBalance(double noviBalans, string brojRacuna)

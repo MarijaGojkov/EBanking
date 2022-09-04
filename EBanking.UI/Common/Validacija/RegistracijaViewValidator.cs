@@ -4,54 +4,50 @@ namespace EBanking.UI.Common.Validacija
 {
     public class RegistracijaViewValidator<TModel> : IValidator<TModel> where TModel : RegistracijaModel
     {
-        public bool IsValidModel { get; set; } = true;
-
-        public void ValidateModel(TModel model)
+        public bool ValidateModel(TModel model)
         {
+            var errors = 0;
             if (model.Email == null || model.Email == "")
             {
                 model.EmailError = "Niste uneli E-mail";
-                IsValidModel = false;
+                errors++;
             }
             else
             {
                 model.EmailError = null;
-                IsValidModel = true;
             }
 
             if (model.KorisnickiPin == null || model.KorisnickiPin == "")
             {
                 model.KorisnickiPinError = "Niste uneli korisnicki pin";
-                IsValidModel = false;
+                errors++;
             }
             else
             {
                 model.KorisnickiPinError = null;
-                IsValidModel = true;
             }
 
             if (model.Lozinka == null || model.Lozinka == "")
             {
                 model.LozinkaError = "Niste uneli lozinku";
-                IsValidModel = false;
+                errors++;
             }
             else
             {
                 model.LozinkaError = null;
-                IsValidModel = true;
             }
 
             if (model.PonoviLozinku == null || model.PonoviLozinku == "")
             {
                 model.PonoviLozinkuError = "Niste uneli ponovo lozinku";
-                IsValidModel = false;
+                errors++;
             }
             else
             {
                 model.PonoviLozinkuError = null;
-                IsValidModel = true;
             }
 
+            return errors == 0;
         }
     }
 }
