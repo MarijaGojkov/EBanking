@@ -27,9 +27,11 @@ namespace EBanking.UI.ViewModels.Windows
             Model.BrojRacunaPlatioca = transakcijaInfo.BrojRacuna;
             Model.TrenutnoStanje = transakcijaInfo.TrenutniBalans;
             PlacanjeCommand = new RelayCommand(Plati);
+            TransakcijaInfo = transakcijaInfo;
         }
 
         public RelayCommand PlacanjeCommand { get; set; }
+        public TransakcijaInfo TransakcijaInfo { get; set; }
 
         public void Plati()
         {
@@ -42,13 +44,34 @@ namespace EBanking.UI.ViewModels.Windows
                     BrojRacunaSekundarnogAktera = Model.BrojRacunaPrimaoca,
                     NazivSekundarnogAktera = Model.NazivPrimaoca,
                     BalansNakonTransakcije = Model.TrenutnoStanje - Model.KolicinaNovca,
-                    Datum = System.DateTime.UtcNow
-                   
-            });
+                    Datum = DateTime.UtcNow
+                });
 
                 _racunService.UpdateBalance(Model.TrenutnoStanje - Model.KolicinaNovca, Model.BrojRacunaPlatioca);
+
+                if (_racunService.IsValidRacun(Model.BrojRacunaPrimaoca))
+                {
+                    DodajTransakcijuPrimaocu();
+                }
                 Close();
             }
+        }
+
+        private async void DodajTransakcijuPrimaocu()
+        {
+            var racun = await _racunService.GetRacunByBrojRacuna(Model.BrojRacunaPrimaoca);
+
+            _transakcijaService.CreateTransakcija(new TransakcijaModel
+            {
+                BrojRacuna = Model.BrojRacunaPrimaoca,
+                KolicinaNovca = Model.KolicinaNovca,
+                BrojRacunaSekundarnogAktera = Model.BrojRacunaPlatioca,
+                NazivSekundarnogAktera = TransakcijaInfo.ImeKorisnika,
+                BalansNakonTransakcije = racun.Balans + Model.KolicinaNovca,
+                Datum = DateTime.UtcNow
+            });
+
+            _racunService.UpdateBalance(racun.Balans + Model.KolicinaNovca, Model.BrojRacunaPrimaoca);
         }
     }
 }

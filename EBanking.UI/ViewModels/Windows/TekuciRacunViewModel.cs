@@ -51,7 +51,8 @@ namespace EBanking.UI.ViewModels.Windows
                 PlacanjeView view = new PlacanjeView
                 {
                     DataContext = new PlacanjeViewModel(_transakcijaService, _racunService,
-                                new TransakcijaInfo { BrojRacuna = Model.IzabranRacun.BrojRacuna, TrenutniBalans = Model.IzabranRacun.Balans })
+                                new TransakcijaInfo { BrojRacuna = Model.IzabranRacun.BrojRacuna, TrenutniBalans = Model.IzabranRacun.Balans,
+                                ImeKorisnika = Model.Racuni.First().Korisnik.Ime + " " + Model.Racuni.First().Korisnik.Prezime })
                 };
                 //Pri kreiranju novog prozora, subskrajbujemo se na event "Closing". Kada se on okine, tokom zatvaranja child stranice
                 //Kod nas se okine metoda GetRacun
