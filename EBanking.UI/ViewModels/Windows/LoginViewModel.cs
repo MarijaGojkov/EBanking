@@ -43,6 +43,14 @@ namespace EBanking.UI.ViewModels.Windows
                 {
                     DataContext = new TekuciRacunViewModel(_racunService, _transakcijaService, _menjacnicaService, idKorisnika)
                 };
+                tekuciRacunView.Closing += (s, o) =>
+                {
+                    LoginView view = new LoginView
+                    {
+                        DataContext = this
+                    };
+                    view.Show();
+                };
                 tekuciRacunView.Show();
                 Close();
             }
