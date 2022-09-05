@@ -31,9 +31,12 @@ namespace EBanking.UI.ViewModels
             SimpleIoc.Default.Register<RegistracijaViewModel>();
             SimpleIoc.Default.Register<PlacanjeViewModel>();
             SimpleIoc.Default.Register<MenjacnicaViewModel>();
+            SimpleIoc.Default.Register<DetaljiTransakcijeViewModel>();
             #endregion
         }
 
+
+        public DetaljiTransakcijeViewModel DetaljiTransakcijeView => ServiceLocator.Current.GetInstance<DetaljiTransakcijeViewModel>();
         public TekuciRacunViewModel RacunView => ServiceLocator.Current.GetInstance<TekuciRacunViewModel>();
         public LoginViewModel LoginView => ServiceLocator.Current.GetInstance<LoginViewModel>();
         public RegistracijaViewModel RegistracijaView => ServiceLocator.Current.GetInstance<RegistracijaViewModel>();

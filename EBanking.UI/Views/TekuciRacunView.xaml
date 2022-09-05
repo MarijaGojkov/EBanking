@@ -24,7 +24,7 @@
         </DataGrid>
         <Button Content="Novo placanje" Command="{Binding PlacanjeCommand}" HorizontalAlignment="Left" Margin="734,521,0,0" VerticalAlignment="Top" Height="28" Width="85"/>
         <Label Content="{Binding Model.IzabranRacun.Balans}" HorizontalAlignment="Left" Margin="542,115,0,0" VerticalAlignment="Top"/>
-        <DataGrid ItemsSource="{Binding Model.IzabranRacun.Transakcije, Mode=TwoWay}" SelectedItem="{Binding Model.Transakcije, Mode=TwoWay}" MaxHeight="300" FontSize="15" IsSynchronizedWithCurrentItem="True" x:Name="GridRacuni_Copy" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,271,486,89" VerticalScrollBarVisibility="Auto"
+        <DataGrid ItemsSource="{Binding Model.IzabranRacun.Transakcije, Mode=TwoWay}" SelectedItem="{Binding Model.IzabranaTransakcija, Mode=TwoWay}" MaxHeight="300" FontSize="15" IsSynchronizedWithCurrentItem="True" x:Name="GridRacuni_Copy" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,271,486,89" VerticalScrollBarVisibility="Auto"
             ScrollViewer.CanContentScroll="True" 
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             ScrollViewer.HorizontalScrollBarVisibility="Auto">
@@ -37,5 +37,6 @@
         <Label Content="Vase transakcije " HorizontalAlignment="Left" Height="25" Margin="120,241,0,0" VerticalAlignment="Top" Width="96"/>
         <Button Command="{Binding OtvoriMenjacnicuCommand}" Content="Menjacnica" HorizontalAlignment="Left" Margin="760,292,0,0" VerticalAlignment="Top"/>
         <Button Command="{Binding IzlogujSeCommand}" Content="Izloguj se" HorizontalAlignment="Left" Margin="824,22,0,0" VerticalAlignment="Top"/>
+        <Button Content="Detalji transakcije"  Command="{Binding DetaljiTransakcijeCommand}"  HorizontalAlignment="Left" Margin="766,458,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
