@@ -10,5 +10,6 @@
         public DateTime DatumKreiranja { get; set; }
         public KorisnikModel Korisnik { get; set; }
         public List<TransakcijaModel> Transakcije { get; set; }
+        public List<MenjacnicaModel> Kursevi { get; set; }
     }
 }

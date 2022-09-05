@@ -15,6 +15,7 @@ namespace EBanking.UI.ViewModels.Windows
     {
         private readonly IRacunService _racunService;
         private readonly ITransakcijaService _transakcijaService;
+        private readonly IMenjacnicaService _menjacnicaService;
 
         [PreferredConstructor]
         public TekuciRacunViewModel()
@@ -22,17 +23,20 @@ namespace EBanking.UI.ViewModels.Windows
             Model.Title = "Tekuci racun";
         }
 
-        public TekuciRacunViewModel(IRacunService racunService, ITransakcijaService transakcijaService, int idKorisnika)
+        public TekuciRacunViewModel(IRacunService racunService, ITransakcijaService transakcijaService, IMenjacnicaService menjacnicaService, int idKorisnika)
         {
             Model.Title = "Tekuci racun";
             _racunService = racunService;
             _transakcijaService = transakcijaService;
+            _menjacnicaService = menjacnicaService;
             IdKorisnika = idKorisnika;
             GetRacun(idKorisnika);
             PlacanjeCommand = new RelayCommand(Placanje);
+            OtvoriMenjacnicuCommand = new RelayCommand(OtvoriMenjacnicu);
         }
 
         public RelayCommand PlacanjeCommand { get; set; }
+        public RelayCommand OtvoriMenjacnicuCommand { get; set; }
         public int IdKorisnika { get; set; }
 
         // Metoda koja se poziva pri otvaranju prozora koja nam daje sve informacije o racunima za korisnika
@@ -42,10 +46,20 @@ namespace EBanking.UI.ViewModels.Windows
 
             Model.ImeKorsnika = Model.Racuni.First().Korisnik.Ime + " " + Model.Racuni.First().Korisnik.Prezime;
         }
-        //public void GetTransakcija(string brojRacuna)
-        //{
-        //    Model.Transakcije = _transakcijaService.GetTransakcijeByBrojRacuna(brojRacuna);
-        //}
+
+        public void OtvoriMenjacnicu()
+        {
+            var racuni = Model.Racuni.Where(x => x.BrojRacuna != Model.IzabranRacun.BrojRacuna).ToList();
+            MenjacnicaView view = new MenjacnicaView
+            {
+                DataContext = new MenjacnicaViewModel(_transakcijaService, _racunService, _menjacnicaService, Model.IzabranRacun, racuni, Model.ImeKorsnika)
+            };
+            view.Closing += (s, o) =>
+            {
+                GetRacun(IdKorisnika);
+            };
+            view.Show();
+        }
 
         public async void Placanje()
         {
