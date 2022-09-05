@@ -18,9 +18,11 @@ namespace EBanking.UI.ViewModels
             SimpleIoc.Default.Register<IRacunService, RacunService>();
             SimpleIoc.Default.Register<IKorisnikService, KorisnikService>();
             SimpleIoc.Default.Register<ITransakcijaService, TransakcijaService>();
+            SimpleIoc.Default.Register<IMenjacnicaService, MenjacnicaService>();
             SimpleIoc.Default.Register<IRepozitorijumTekucegRacuna, RepozitorijumTekucegRacuna>();
             SimpleIoc.Default.Register<IRepozitorijumKorisnika, RepozitorijumKorisnika>();
             SimpleIoc.Default.Register<IRepozitorijumTransakcija, RepozitorijumTransakcija>();
+            SimpleIoc.Default.Register<IRepozitorijumMenjacnica, RepozitorijumMenjacnica>();
             #endregion
 
             #region Register Views
@@ -28,6 +30,7 @@ namespace EBanking.UI.ViewModels
             SimpleIoc.Default.Register<LoginViewModel>();
             SimpleIoc.Default.Register<RegistracijaViewModel>();
             SimpleIoc.Default.Register<PlacanjeViewModel>();
+            SimpleIoc.Default.Register<MenjacnicaViewModel>();
             #endregion
         }
 
@@ -35,6 +38,7 @@ namespace EBanking.UI.ViewModels
         public LoginViewModel LoginView => ServiceLocator.Current.GetInstance<LoginViewModel>();
         public RegistracijaViewModel RegistracijaView => ServiceLocator.Current.GetInstance<RegistracijaViewModel>();
         public PlacanjeViewModel PlacanjeView => ServiceLocator.Current.GetInstance<PlacanjeViewModel>();
+        public MenjacnicaViewModel MenjacnicaView => ServiceLocator.Current.GetInstance<MenjacnicaViewModel>();
 
         public static void Cleanup() { }
     }

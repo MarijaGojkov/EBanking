@@ -8,11 +8,13 @@ namespace EBanking.Services.Implementacija
     {
         private readonly IRepozitorijumTekucegRacuna _repozitorijumRacuna;
         private readonly IRepozitorijumTransakcija _repozitorijumTransakcija;
+        private readonly IRepozitorijumMenjacnica _repozitorijumMenjacnica;
 
-        public RacunService(IRepozitorijumTekucegRacuna repozitorijumRacuna, IRepozitorijumTransakcija repozitorijumTransakcija)
+        public RacunService(IRepozitorijumTekucegRacuna repozitorijumRacuna, IRepozitorijumTransakcija repozitorijumTransakcija, IRepozitorijumMenjacnica repozitorijumMenjacnica)
         {
             _repozitorijumRacuna = repozitorijumRacuna;
             _repozitorijumTransakcija = repozitorijumTransakcija;
+            _repozitorijumMenjacnica = repozitorijumMenjacnica;
         }
 
         public async Task<RacunModel> GetRacunByBrojRacuna(string brojRacuna)
@@ -76,11 +78,30 @@ namespace EBanking.Services.Implementacija
                         Prezime = racun.Korisnik.Prezime,
                         Telefon = racun.Korisnik.Telefon,
                     },
-                    Transakcije = transakcije
+                    Transakcije = transakcije,
+                    Kursevi = MapirajKurseve(racun.Valuta)
                 });
             }
 
             return result;
+        }
+
+        public List<MenjacnicaModel> MapirajKurseve(string valutaRacuna)
+        {
+            var results = _repozitorijumMenjacnica.GetMenjacnicaByValuta(valutaRacuna);
+
+            var modeli = new List<MenjacnicaModel>();
+
+            foreach(var result in results)
+            {
+                modeli.Add(new MenjacnicaModel
+                {
+                    Valuta = result.Valuta,
+                    Vrednost = result.Vrednost
+                });
+            }
+
+            return modeli;
         }
 
         public bool IsValidRacun(string brojRacuna)
