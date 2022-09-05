@@ -9,10 +9,10 @@
         Title="{Binding Model.Title}" Height="600" Width="900" >
     <Grid>
         <Label Content="Dobro dosli" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="85"/>
-        <Label Content="Vasi racuni" HorizontalAlignment="Left" Height="25" Margin="130,82,0,0" VerticalAlignment="Top" Width="86"/>
+        <Label Content="Vasi racuni" HorizontalAlignment="Left" Height="25" Margin="130,58,0,0" VerticalAlignment="Top" Width="86"/>
         <Label Content="{Binding Model.ImeKorsnika}" HorizontalAlignment="Left" Height="24" Margin="95,11,0,0" VerticalAlignment="Top" Width="154"/>
         <Label Content="{Binding Model.IzabranRacun.BrojRacuna, Mode=TwoWay}" HorizontalAlignment="Left" Height="24" Margin="400,76,0,0" VerticalAlignment="Top" Width="154"/>
-        <DataGrid ItemsSource="{Binding Model.Racuni, Mode=TwoWay}" SelectedItem="{Binding Model.IzabranRacun, Mode=TwoWay}" Grid.Row="1" MaxHeight="300" FontSize="15" IsSynchronizedWithCurrentItem="True" Name="GridRacuni" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,115,564,372" VerticalScrollBarVisibility="Auto"
+        <DataGrid ItemsSource="{Binding Model.Racuni, Mode=TwoWay}" SelectedItem="{Binding Model.IzabranRacun, Mode=TwoWay}" MaxHeight="300" FontSize="15" IsSynchronizedWithCurrentItem="True" Name="GridRacuni" AutoGenerateColumns="False" CanUserAddRows="False" Margin="10,88,564,348" VerticalScrollBarVisibility="Auto"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
@@ -35,6 +35,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Vase transakcije " HorizontalAlignment="Left" Height="25" Margin="120,241,0,0" VerticalAlignment="Top" Width="96"/>
+        <Button Command="{Binding OtvoriMenjacnicuCommand}" Content="Menjacnica" HorizontalAlignment="Left" Margin="760,292,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding IzlogujSeCommand}" Content="Izloguj se" HorizontalAlignment="Left" Margin="824,22,0,0" VerticalAlignment="Top"/>
         <Button Content="Detalji transakcije"  Command="{Binding DetaljiTransakcijeCommand}"  HorizontalAlignment="Left" Margin="766,458,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

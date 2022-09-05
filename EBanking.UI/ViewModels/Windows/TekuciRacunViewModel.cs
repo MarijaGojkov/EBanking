@@ -15,6 +15,7 @@ namespace EBanking.UI.ViewModels.Windows
     {
         private readonly IRacunService _racunService;
         private readonly ITransakcijaService _transakcijaService;
+        private readonly IMenjacnicaService _menjacnicaService;
 
         [PreferredConstructor]
         public TekuciRacunViewModel()
@@ -22,18 +23,23 @@ namespace EBanking.UI.ViewModels.Windows
             Model.Title = "Tekuci racun";
         }
 
-        public TekuciRacunViewModel(IRacunService racunService, ITransakcijaService transakcijaService, int idKorisnika)
+        public TekuciRacunViewModel(IRacunService racunService, ITransakcijaService transakcijaService, IMenjacnicaService menjacnicaService, int idKorisnika)
         {
             Model.Title = "Tekuci racun";
             _racunService = racunService;
             _transakcijaService = transakcijaService;
+            _menjacnicaService = menjacnicaService;
             IdKorisnika = idKorisnika;
             GetRacun(idKorisnika);
             PlacanjeCommand = new RelayCommand(Placanje);
+            OtvoriMenjacnicuCommand = new RelayCommand(OtvoriMenjacnicu);
+            IzlogujSeCommand = new RelayCommand(IzlogujSe);
             DetaljiTransakcijeCommand = new RelayCommand(DetaljiTransakcije);
         }
 
         public RelayCommand PlacanjeCommand { get; set; }
+        public RelayCommand OtvoriMenjacnicuCommand { get; set; }
+        public RelayCommand IzlogujSeCommand { get; set; }
         public RelayCommand DetaljiTransakcijeCommand { get; set; }
         public int IdKorisnika { get; set; }
 
@@ -44,10 +50,25 @@ namespace EBanking.UI.ViewModels.Windows
 
             Model.ImeKorsnika = Model.Racuni.First().Korisnik.Ime + " " + Model.Racuni.First().Korisnik.Prezime;
         }
-        //public void GetTransakcija(string brojRacuna)
-        //{
-        //    Model.Transakcije = _transakcijaService.GetTransakcijeByBrojRacuna(brojRacuna);
-        //}
+
+        public void OtvoriMenjacnicu()
+        {
+            var racuni = Model.Racuni.Where(x => x.BrojRacuna != Model.IzabranRacun.BrojRacuna).ToList();
+            MenjacnicaView view = new MenjacnicaView
+            {
+                DataContext = new MenjacnicaViewModel(_transakcijaService, _racunService, _menjacnicaService, Model.IzabranRacun, racuni, Model.ImeKorsnika)
+            };
+            view.Closing += (s, o) =>
+            {
+                GetRacun(IdKorisnika);
+            };
+            view.Show();
+        }
+
+        public void IzlogujSe()
+        {
+            Close();
+        }
 
         public async void Placanje()
         {
