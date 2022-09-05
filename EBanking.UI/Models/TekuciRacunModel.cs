@@ -10,5 +10,6 @@ namespace EBanking.UI.Models
         public Services.Modeli.RacunModel IzabranRacun { get; set; }
         public List<Services.Modeli.RacunModel> Racuni { get; set; }
         public List<Services.Modeli.TransakcijaModel> Transakcije { get; set; }
+        public Services.Modeli.TransakcijaModel IzabranaTransakcija { get; set; }
     }
 }

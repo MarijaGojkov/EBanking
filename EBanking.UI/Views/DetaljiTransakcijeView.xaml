@@ -1,0 +1,39 @@
+﻿<Window x:Class="EBanking.UI.Views.DetaljiTransakcijeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EBanking.UI.Views"
+        mc:Ignorable="d"
+        DataContext="{Binding DetaljiTransakcijeView, Mode=OneWay, Source={StaticResource Locator}}"
+    
+        Title="DetaljiTransakcijeView" Height="450" Width="800">
+    <Grid>
+        <Label Content="Broj Racuna" HorizontalAlignment="Left" Margin="109,69,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Model.Transakcija.BrojRacuna, Mode=TwoWay}"  HorizontalAlignment="Left" Margin="277,72,0,0" VerticalAlignment="Top" Height="28" RenderTransformOrigin="0.456,1.424" Width="92">
+
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label Content="IdTransakcije" HorizontalAlignment="Left" Margin="109,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.589,0.624"/>
+        <Label Content="{Binding Model.Transakcija.IdTransakcije}" HorizontalAlignment="Left" Margin="277,29,0,0" VerticalAlignment="Top" Width="92" Height="38"/>
+        <Label Content="Kolicina novca" HorizontalAlignment="Left" Margin="109,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.399,1.612"/>
+        <Label Content="{Binding Model.Transakcija.KolicinaNovca}" HorizontalAlignment="Left" Margin="277,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.088,0.753"/>
+        <Label Content="BalansNakonTransakcije" HorizontalAlignment="Left" Margin="109,159,0,0" VerticalAlignment="Top" Width="149"/>
+        <Label Content="Datum" HorizontalAlignment="Left" Margin="109,185,0,0" VerticalAlignment="Top"/>
+        <Label Content="Naziv sekundarnog Aktera" HorizontalAlignment="Left" Margin="109,217,0,0" VerticalAlignment="Top"/>
+        <Label Content="Broj racuna sekudnarnog aktera" HorizontalAlignment="Left" Margin="109,248,0,0" VerticalAlignment="Top" Width="183"/>
+        <Label Content="{Binding Model.Transakcija.BalansNakonTransakcije}" HorizontalAlignment="Left" Margin="287,159,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Model.Transakcija.Datum}" HorizontalAlignment="Left" Margin="277,185,0,0" VerticalAlignment="Top" Height="26" Width="70"/>
+        <Label Content="{Binding Model.Transakcija.NazivSekundarnogAktera}" HorizontalAlignment="Left" Margin="277,217,0,0" VerticalAlignment="Top" Height="26" Width="49"/>
+        <Label Content="{Binding Model.Transakcija.BrojRacunaSekundarnogAktera}" HorizontalAlignment="Left" Margin="309,248,0,0" VerticalAlignment="Top" Height="26" Width="38"/>
+        <Label Content="Broj Kartice" HorizontalAlignment="Left" Margin="109,100,0,0" VerticalAlignment="Top" Width="77"/>
+        <Label Content="{Binding Model.Transakcija.BrojKartice}" HorizontalAlignment="Left" Margin="277,100,0,0" VerticalAlignment="Top" Width="66"/>
+    </Grid>
+</Window>

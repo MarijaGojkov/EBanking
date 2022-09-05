@@ -30,9 +30,11 @@ namespace EBanking.UI.ViewModels.Windows
             IdKorisnika = idKorisnika;
             GetRacun(idKorisnika);
             PlacanjeCommand = new RelayCommand(Placanje);
+            DetaljiTransakcijeCommand = new RelayCommand(DetaljiTransakcije);
         }
 
         public RelayCommand PlacanjeCommand { get; set; }
+        public RelayCommand DetaljiTransakcijeCommand { get; set; }
         public int IdKorisnika { get; set; }
 
         // Metoda koja se poziva pri otvaranju prozora koja nam daje sve informacije o racunima za korisnika
@@ -49,13 +51,13 @@ namespace EBanking.UI.ViewModels.Windows
 
         public async void Placanje()
         {
-            if(Model.IzabranRacun is not null)
+            if (Model.IzabranRacun is not null)
             {
                 PlacanjeView view = new PlacanjeView
                 {
                     DataContext = new PlacanjeViewModel(_transakcijaService, _racunService,
                                 new TransakcijaInfo { BrojRacuna = Model.IzabranRacun.BrojRacuna, TrenutniBalans = Model.IzabranRacun.Balans,
-                                ImeKorisnika = Model.Racuni.First().Korisnik.Ime + " " + Model.Racuni.First().Korisnik.Prezime })
+                                    ImeKorisnika = Model.Racuni.First().Korisnik.Ime + " " + Model.Racuni.First().Korisnik.Prezime })
                 };
                 //Pri kreiranju novog prozora, subskrajbujemo se na event "Closing". Kada se on okine, tokom zatvaranja child stranice
                 //Kod nas se okine metoda GetRacun
@@ -65,11 +67,23 @@ namespace EBanking.UI.ViewModels.Windows
                 };
                 view.Show();
 
-            } 
+            }
             else
             {
                 MessageBox.Show("Morate izabrati racun", "Greska");
-            }  
+            }
         }
+
+        public void DetaljiTransakcije()
+        {
+            DetaljiTransakcijeView view = new DetaljiTransakcijeView
+            {
+                DataContext = new DetaljiTransakcijeViewModel(Model.IzabranaTransakcija)
+            };
+            view.Show();
+        }
+        
+        
+
     }
 }
