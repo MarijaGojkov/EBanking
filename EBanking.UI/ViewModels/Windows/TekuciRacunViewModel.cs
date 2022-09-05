@@ -33,10 +33,12 @@ namespace EBanking.UI.ViewModels.Windows
             GetRacun(idKorisnika);
             PlacanjeCommand = new RelayCommand(Placanje);
             OtvoriMenjacnicuCommand = new RelayCommand(OtvoriMenjacnicu);
+            IzlogujSeCommand = new RelayCommand(IzlogujSe);
         }
 
         public RelayCommand PlacanjeCommand { get; set; }
         public RelayCommand OtvoriMenjacnicuCommand { get; set; }
+        public RelayCommand IzlogujSeCommand { get; set; }
         public int IdKorisnika { get; set; }
 
         // Metoda koja se poziva pri otvaranju prozora koja nam daje sve informacije o racunima za korisnika
@@ -59,6 +61,11 @@ namespace EBanking.UI.ViewModels.Windows
                 GetRacun(IdKorisnika);
             };
             view.Show();
+        }
+
+        public void IzlogujSe()
+        {
+            Close();
         }
 
         public async void Placanje()

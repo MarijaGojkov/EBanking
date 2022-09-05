@@ -36,5 +36,6 @@
         </DataGrid>
         <Label Content="Vase transakcije " HorizontalAlignment="Left" Height="25" Margin="120,241,0,0" VerticalAlignment="Top" Width="96"/>
         <Button Command="{Binding OtvoriMenjacnicuCommand}" Content="Menjacnica" HorizontalAlignment="Left" Margin="760,292,0,0" VerticalAlignment="Top"/>
+        <Button Command="{Binding IzlogujSeCommand}" Content="Izloguj se" HorizontalAlignment="Left" Margin="824,22,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
