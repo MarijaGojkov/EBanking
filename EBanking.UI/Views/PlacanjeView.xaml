@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EBanking.UI.Views"
         mc:Ignorable="d"
         DataContext="{Binding PlacanjeView, Source={StaticResource Locator}}"
-        Title="{Binding Model.Title}" Height="600" Width="400" 
+        Title="{Binding Model.Title}" Height="700" Width="400" 
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"

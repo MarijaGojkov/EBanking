@@ -36,7 +36,10 @@ namespace EBanking.UI.ViewModels.Windows
         public void Login()
         {
             var idKorisnika = _korisnikService.Login(Model.Email, Model.Password);
-
+            if (idKorisnika == 0)
+            {
+                MessageBox.Show("Korisničko ime i lozinka se ne poklapaju.", "Greska");
+            }
             if (Validator.ValidateModel(Model) && idKorisnika is not 0)
             {
                 RacunView tekuciRacunView = new RacunView

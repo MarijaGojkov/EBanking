@@ -7,15 +7,39 @@
         mc:Ignorable="d"
         DataContext="{Binding MenjacnicaView, Source={StaticResource Locator}}"
         Title="{Binding Model.Title}" Height="450" Width="800">
-    <Grid>
-        <Button Command="{Binding KonvertujCommand}" Content="Konvertuj" HorizontalAlignment="Left" Margin="330,338,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="359,122,0,0" TextWrapping="Wrap" Text="{Binding Model.Iznos, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
-        <TextBox HorizontalAlignment="Left" Margin="358,252,0,0" TextWrapping="Wrap" Text="{Binding Model.KonvertovanaVrednost, Mode=TwoWay}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Konvertovana vrednost" HorizontalAlignment="Left" Margin="226,248,0,0" VerticalAlignment="Top"/>
-        <Label Content="Iznos" HorizontalAlignment="Left" Margin="226,122,0,0" VerticalAlignment="Top"/>
-        <ComboBox Text="{Binding Model.IzabranRacun.BrojRacuna}" SelectedValue="{Binding Model.IzabranRacun}" ItemsSource="{Binding Path=Model.Racuni}" DisplayMemberPath="BrojRacuna" HorizontalAlignment="Left" Margin="359,183,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="{Binding Model.IzabranRacun.Valuta}" HorizontalAlignment="Left" Margin="517,183,0,0" VerticalAlignment="Top"/>
-        <Button Content="Gotovo" Command="{Binding PokreniTransakcijuCommand}" HorizontalAlignment="Left" Margin="441,338,0,0" VerticalAlignment="Top"/>
+    <Border CornerRadius="12">
+        <Border.Background>
+            <ImageBrush ImageSource="..\Resources\background2.jpg"/>
+        </Border.Background>
+        <Border CornerRadius="10"
+            BorderThickness="2"
+            Opacity="0.8">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#462AD8" Offset="0"/>
+                    <GradientStop Color="#DA34AE" Offset="0.75"/>
+                    <GradientStop Color="#8A16C1" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
 
-    </Grid>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#060531" Offset="0"/>
+                    <GradientStop Color="#1B1448" Offset="0.75"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Button Command="{Binding KonvertujCommand}" Content="Konvertuj" HorizontalAlignment="Left" Margin="450,298,0,0" VerticalAlignment="Top" Height="30" Width="100" FontSize="14px"/>
+                <TextBox HorizontalAlignment="Left" Margin="420,122,0,0" TextWrapping="Wrap" Text="{Binding Model.Iznos, Mode=TwoWay}" VerticalAlignment="Top" Width="130" Height="30" FontSize="16px"/>
+                <TextBox HorizontalAlignment="Left" Margin="420,252,0,0" TextWrapping="Wrap" Text="{Binding Model.KonvertovanaVrednost, Mode=TwoWay}" VerticalAlignment="Top" Width="130" Height="30" FontSize="16px"/>
+                <Label Content="Konvertovana vrednost" HorizontalAlignment="Left" Margin="230,260,0,0" VerticalAlignment="Top" FontSize="16px" Foreground="White"/>
+                <Label Content="Izaberi račun" HorizontalAlignment="Left" Margin="230,195,0,0" VerticalAlignment="Top" FontSize="16px" Foreground="White"/>
+                <Label Content="Iznos" HorizontalAlignment="Left" Margin="230,130,0,0" VerticalAlignment="Top" FontSize="16px" Foreground="White"/>
+                <ComboBox Text="{Binding Model.IzabranRacun.BrojRacuna}" SelectedValue="{Binding Model.IzabranRacun}" ItemsSource="{Binding Path=Model.Racuni}" DisplayMemberPath="BrojRacuna" HorizontalAlignment="Left" Margin="420,183,0,0" VerticalAlignment="Top" Width="130" Height="34"/>
+                <Label Content="{Binding Model.IzabranRacun.Valuta}" HorizontalAlignment="Left" Margin="517,183,0,0" VerticalAlignment="Top"/>
+                <Button Content="Gotovo" Command="{Binding PokreniTransakcijuCommand}" HorizontalAlignment="Left" Margin="450,333,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.518,0.619" Height="30" Width="100" FontSize="14px"/>
+
+            </Grid>
+        </Border>
+    </Border>
 </Window>
