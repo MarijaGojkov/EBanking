@@ -60,8 +60,8 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
                 }
 
             }
-
-            return (int)idKorisnika;
+            var id = idKorisnika == null ? 0 : (int)idKorisnika;
+            return id ;
         }
 
         public List<Korisnik> GetAllKorisnici()
