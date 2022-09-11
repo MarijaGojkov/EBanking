@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -47,7 +48,7 @@ namespace EBanking.UI.ViewModels.Windows
         public RelayCommand KonvertujCommand { get; set; }
         public RelayCommand PokreniTransakcijuCommand { get; set; }
         public string ImeKorisnika { get; set; }
-
+       
         public void Konvertuj()
         {
             var enumToSwitch = (ValutaRacuna)Enum.Parse(typeof(ValutaRacuna), Model.IzabranRacun.Valuta);
@@ -65,20 +66,26 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void Transakcija()
         {
-            _transakcijaService.CreateTransakcija(new TransakcijaModel
+            if (Model.Racun.Balans > Model.Iznos)
             {
-                BrojRacuna = Model.Racun.BrojRacuna,
-                KolicinaNovca = Model.Iznos,
-                BrojRacunaSekundarnogAktera = Model.IzabranRacun.BrojRacuna,
-                NazivSekundarnogAktera = ImeKorisnika,
-                BalansNakonTransakcije = Model.Racun.Balans - Model.Iznos,
-                Datum = DateTime.UtcNow
-            });
+                _transakcijaService.CreateTransakcija(new TransakcijaModel
+                {
+                    BrojRacuna = Model.Racun.BrojRacuna,
+                    KolicinaNovca = Model.Iznos,
+                    BrojRacunaSekundarnogAktera = Model.IzabranRacun.BrojRacuna,
+                    NazivSekundarnogAktera = ImeKorisnika,
+                    BalansNakonTransakcije = Model.Racun.Balans - Model.Iznos,
+                    Datum = DateTime.UtcNow
+                });
 
-            _racunService.UpdateBalance(Model.Racun.Balans - Model.Iznos, Model.Racun.BrojRacuna);
+                _racunService.UpdateBalance(Model.Racun.Balans - Model.Iznos, Model.Racun.BrojRacuna);
 
-            DodajTransakcijuPrimaocu();
-            Close();
+                DodajTransakcijuPrimaocu();
+                Close();
+            }
+            else {
+                MessageBox.Show("Nemate dovoljno sredstava na racunu");
+                 }
         }
 
         private void DodajTransakcijuPrimaocu()
