@@ -5,6 +5,7 @@ using EBanking.UI.Common.Validacija;
 using EBanking.UI.Models;
 using GalaSoft.MvvmLight.Ioc;
 using System;
+using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -33,21 +34,27 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void Plati()
         {
-            if (Validator.ValidateModel(Model))
+            if (Model.TrenutnoStanje > Model.KolicinaNovca)
             {
-                _transakcijaService.CreateTransakcija(new TransakcijaModel
+                if (Validator.ValidateModel(Model))
                 {
-                    BrojRacuna = Model.BrojRacunaPlatioca,
-                    KolicinaNovca = Model.KolicinaNovca,
-                    BrojRacunaSekundarnogAktera = Model.BrojRacunaPrimaoca,
-                    NazivSekundarnogAktera = Model.NazivPrimaoca,
-                    BalansNakonTransakcije = Model.TrenutnoStanje - Model.KolicinaNovca,
-                    Datum = System.DateTime.UtcNow
-                   
-            });
+                    _transakcijaService.CreateTransakcija(new TransakcijaModel
+                    {
+                        BrojRacuna = Model.BrojRacunaPlatioca,
+                        KolicinaNovca = Model.KolicinaNovca,
+                        BrojRacunaSekundarnogAktera = Model.BrojRacunaPrimaoca,
+                        NazivSekundarnogAktera = Model.NazivPrimaoca,
+                        BalansNakonTransakcije = Model.TrenutnoStanje - Model.KolicinaNovca,
+                        Datum = System.DateTime.UtcNow
 
-                _racunService.UpdateBalance(Model.TrenutnoStanje - Model.KolicinaNovca, Model.BrojRacunaPlatioca);
-                Close();
+                    });
+
+                    _racunService.UpdateBalance(Model.TrenutnoStanje - Model.KolicinaNovca, Model.BrojRacunaPlatioca);
+                    Close();
+                }
+            }
+            else {
+                MessageBox.Show("Nemate dovoljno sredstava na racunu");
             }
         }
     }
