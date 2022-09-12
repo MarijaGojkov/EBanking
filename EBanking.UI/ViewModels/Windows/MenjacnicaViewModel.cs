@@ -48,22 +48,28 @@ namespace EBanking.UI.ViewModels.Windows
         public RelayCommand KonvertujCommand { get; set; }
         public RelayCommand PokreniTransakcijuCommand { get; set; }
         public string ImeKorisnika { get; set; }
-       
+
         public void Konvertuj()
         {
-            var enumToSwitch = (ValutaRacuna)Enum.Parse(typeof(ValutaRacuna), Model.IzabranRacun.Valuta);
-
-            switch (enumToSwitch)
+            if (Model.IzabranRacun == null)
             {
-                case ValutaRacuna.Dinar:
-                    Model.KonvertovanaVrednost = Model.Iznos * Model.Racun.Kursevi.FirstOrDefault(x => x.Valuta.Equals(Valute.RSD.ToString())).Vrednost;
-                    break;
-                case ValutaRacuna.Euro:
-                    Model.KonvertovanaVrednost = Model.Iznos * Model.Racun.Kursevi.FirstOrDefault(x => x.Valuta.Equals(Valute.EUR.ToString())).Vrednost;
-                    break;
+                MessageBox.Show("Niste odabrali racun");
+            }
+            else
+            {
+                var enumToSwitch = (ValutaRacuna)Enum.Parse(typeof(ValutaRacuna), Model.IzabranRacun.Valuta);
+
+                switch (enumToSwitch)
+                {
+                    case ValutaRacuna.Dinar:
+                        Model.KonvertovanaVrednost = Model.Iznos * Model.Racun.Kursevi.FirstOrDefault(x => x.Valuta.Equals(Valute.RSD.ToString())).Vrednost;
+                        break;
+                    case ValutaRacuna.Euro:
+                        Model.KonvertovanaVrednost = Model.Iznos * Model.Racun.Kursevi.FirstOrDefault(x => x.Valuta.Equals(Valute.EUR.ToString())).Vrednost;
+                        break;
+                }
             }
         }
-
         public void Transakcija()
         {
             if (Model.Racun.Balans > Model.Iznos)
