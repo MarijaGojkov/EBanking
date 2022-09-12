@@ -94,17 +94,22 @@ namespace EBanking.UI.ViewModels.Windows
                 MessageBox.Show("Morate izabrati racun", "Greska");
             }
         }
-
         public void DetaljiTransakcije()
         {
-            DetaljiTransakcijeView view = new DetaljiTransakcijeView
+            if (Model.IzabranRacun is not null)
             {
-                DataContext = new DetaljiTransakcijeViewModel(Model.IzabranaTransakcija)
-            };
-            view.Show();
+                DetaljiTransakcijeView view = new DetaljiTransakcijeView
+                {
+                    DataContext = new DetaljiTransakcijeViewModel(Model.IzabranaTransakcija)
+                };
+                view.Show();
+            }
+            else
+            {
+                MessageBox.Show("Morate odabrati transakciju");
+            }
         }
-        
-        
+
 
     }
 }
