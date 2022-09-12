@@ -52,17 +52,23 @@ namespace EBanking.UI.ViewModels.Windows
         }
 
         public void OtvoriMenjacnicu()
-        {
-            var racuni = Model.Racuni.Where(x => x.BrojRacuna != Model.IzabranRacun.BrojRacuna).ToList();
-            MenjacnicaView view = new MenjacnicaView
+        { if (Model.IzabranRacun is not null)
             {
-                DataContext = new MenjacnicaViewModel(_transakcijaService, _racunService, _menjacnicaService, Model.IzabranRacun, racuni, Model.ImeKorsnika)
-            };
-            view.Closing += (s, o) =>
+                var racuni = Model.Racuni.Where(x => x.BrojRacuna != Model.IzabranRacun.BrojRacuna).ToList();
+                MenjacnicaView view = new MenjacnicaView
+                {
+                    DataContext = new MenjacnicaViewModel(_transakcijaService, _racunService, _menjacnicaService, Model.IzabranRacun, racuni, Model.ImeKorsnika)
+                };
+                view.Closing += (s, o) =>
+                {
+                    GetRacun(IdKorisnika);
+                };
+                view.Show();
+            }
+            else
             {
-                GetRacun(IdKorisnika);
-            };
-            view.Show();
+                MessageBox.Show("Morate odabrati racun");
+            }
         }
 
         public void IzlogujSe()
