@@ -18,7 +18,7 @@ namespace EBanking.DataAccess.Repozitorijumi.Implementacija
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
-                    sqlCommand.CommandText = "SELECT * FROM Menjacnica WHERE valutaRacuna = @valuta";
+                    sqlCommand.CommandText = "SELECT * FROM Menjacnica WHERE valuta = @valuta";
                     sqlCommand.Parameters.AddWithValue("@valuta", valuta);
 
                     using (SqlDataReader reader = sqlCommand.ExecuteReader())
