@@ -1,4 +1,4 @@
-﻿namespace EBanking.UI.Models
+namespace EBanking.UI.Models
 {
     public class LoginModel : BaseModel
     {
@@ -6,7 +6,7 @@
 
         public string Password { get; set; } = "2222";
 
-        #region Validacija 
+        #region Validation
         public string EmailError { get; set; }
         public string PasswordError { get; set; }
         #endregion

@@ -1,8 +1,8 @@
-﻿using CommonServiceLocator;
-using EBanking.DataAccess.Repozitorijumi;
-using EBanking.DataAccess.Repozitorijumi.Implementacija;
+using CommonServiceLocator;
+using EBanking.DataAccess.Repositories;
+using EBanking.DataAccess.Repositories.Implementation;
 using EBanking.Services;
-using EBanking.Services.Implementacija;
+using EBanking.Services.Implementation;
 using EBanking.UI.ViewModels.Windows;
 using GalaSoft.MvvmLight.Ioc;
 
@@ -15,33 +15,32 @@ namespace EBanking.UI.ViewModels
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             #region Register Services
-            SimpleIoc.Default.Register<IRacunService, RacunService>();
-            SimpleIoc.Default.Register<IKorisnikService, KorisnikService>();
-            SimpleIoc.Default.Register<ITransakcijaService, TransakcijaService>();
-            SimpleIoc.Default.Register<IMenjacnicaService, MenjacnicaService>();
-            SimpleIoc.Default.Register<IRepozitorijumTekucegRacuna, RepozitorijumTekucegRacuna>();
-            SimpleIoc.Default.Register<IRepozitorijumKorisnika, RepozitorijumKorisnika>();
-            SimpleIoc.Default.Register<IRepozitorijumTransakcija, RepozitorijumTransakcija>();
-            SimpleIoc.Default.Register<IRepozitorijumMenjacnica, RepozitorijumMenjacnica>();
+            SimpleIoc.Default.Register<IAccountService, AccountService>();
+            SimpleIoc.Default.Register<IUserService, UserService>();
+            SimpleIoc.Default.Register<ITransactionService, TransactionService>();
+            SimpleIoc.Default.Register<ICurrencyExchangeService, CurrencyExchangeService>();
+            SimpleIoc.Default.Register<IAccountRepository, AccountRepository>();
+            SimpleIoc.Default.Register<IUserRepository, UserRepository>();
+            SimpleIoc.Default.Register<ITransactionRepository, TransactionRepository>();
+            SimpleIoc.Default.Register<ICurrencyExchangeRepository, CurrencyExchangeRepository>();
             #endregion
 
             #region Register Views
-            SimpleIoc.Default.Register<TekuciRacunViewModel>();
+            SimpleIoc.Default.Register<AccountViewModel>();
             SimpleIoc.Default.Register<LoginViewModel>();
-            SimpleIoc.Default.Register<RegistracijaViewModel>();
-            SimpleIoc.Default.Register<PlacanjeViewModel>();
-            SimpleIoc.Default.Register<MenjacnicaViewModel>();
-            SimpleIoc.Default.Register<DetaljiTransakcijeViewModel>();
+            SimpleIoc.Default.Register<RegistrationViewModel>();
+            SimpleIoc.Default.Register<PaymentViewModel>();
+            SimpleIoc.Default.Register<CurrencyExchangeViewModel>();
+            SimpleIoc.Default.Register<TransactionDetailsViewModel>();
             #endregion
         }
 
-
-        public DetaljiTransakcijeViewModel DetaljiTransakcijeView => ServiceLocator.Current.GetInstance<DetaljiTransakcijeViewModel>();
-        public TekuciRacunViewModel RacunView => ServiceLocator.Current.GetInstance<TekuciRacunViewModel>();
+        public TransactionDetailsViewModel TransactionDetailsView => ServiceLocator.Current.GetInstance<TransactionDetailsViewModel>();
+        public AccountViewModel AccountView => ServiceLocator.Current.GetInstance<AccountViewModel>();
         public LoginViewModel LoginView => ServiceLocator.Current.GetInstance<LoginViewModel>();
-        public RegistracijaViewModel RegistracijaView => ServiceLocator.Current.GetInstance<RegistracijaViewModel>();
-        public PlacanjeViewModel PlacanjeView => ServiceLocator.Current.GetInstance<PlacanjeViewModel>();
-        public MenjacnicaViewModel MenjacnicaView => ServiceLocator.Current.GetInstance<MenjacnicaViewModel>();
+        public RegistrationViewModel RegistrationView => ServiceLocator.Current.GetInstance<RegistrationViewModel>();
+        public PaymentViewModel PaymentView => ServiceLocator.Current.GetInstance<PaymentViewModel>();
+        public CurrencyExchangeViewModel CurrencyExchangeView => ServiceLocator.Current.GetInstance<CurrencyExchangeViewModel>();
 
         public static void Cleanup() { }
     }
