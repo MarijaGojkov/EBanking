@@ -81,7 +81,7 @@ namespace EBanking.UI.ViewModels.Windows
             {
                 PaymentView view = new PaymentView
                 {
-                    DataContext = new PaymentViewModel(_transactionService, _accountService,
+                    DataContext = new PaymentViewModel(_transactionService,
                                 new TransactionInfo { AccountNumber = Model.SelectedAccount.AccountNumber, CurrentBalance = Model.SelectedAccount.Balance,
                                     UserFullName = Model.Accounts.First().User.FirstName + " " + Model.Accounts.First().User.LastName })
                 };

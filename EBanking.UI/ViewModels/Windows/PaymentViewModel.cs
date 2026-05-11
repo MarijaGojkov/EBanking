@@ -5,24 +5,23 @@ using EBanking.UI.Common.Validation;
 using EBanking.UI.Models;
 using GalaSoft.MvvmLight.Ioc;
 using System;
+using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
     public class PaymentViewModel : BaseViewModel<PaymentModel>
     {
         private readonly ITransactionService _transactionService;
-        private readonly IAccountService _accountService;
 
         [PreferredConstructor]
         public PaymentViewModel()
         {
         }
 
-        public PaymentViewModel(ITransactionService transactionService, IAccountService accountService, TransactionInfo transactionInfo)
+        public PaymentViewModel(ITransactionService transactionService, TransactionInfo transactionInfo)
         {
             Validator = new PaymentViewValidator<PaymentModel>();
             _transactionService = transactionService;
-            _accountService = accountService;
             Model.Title = "New Payment";
             Model.PayerAccountNumber = transactionInfo.AccountNumber;
             Model.CurrentBalance = transactionInfo.CurrentBalance;
@@ -35,43 +34,28 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void Pay()
         {
-            if (Validator.ValidateModel(Model))
+            if (!Validator.ValidateModel(Model))
             {
-                _transactionService.CreateTransaction(new TransactionModel
+                return;
+            }
+
+            try
+            {
+                _transactionService.TransferFunds(new TransferRequest
                 {
-                    AccountNumber = Model.PayerAccountNumber,
+                    PayerAccountNumber = Model.PayerAccountNumber,
+                    RecipientAccountNumber = Model.RecipientAccountNumber,
                     Amount = Model.Amount,
-                    SecondaryPartyAccountNumber = Model.RecipientAccountNumber,
-                    SecondaryPartyName = Model.RecipientName,
-                    BalanceAfterTransaction = Model.CurrentBalance - Model.Amount,
-                    Date = DateTime.UtcNow
+                    RecipientName = Model.RecipientName,
+                    PaymentPurpose = Model.PaymentPurpose,
+                    PayerFullName = TransactionInfo.UserFullName,
                 });
-
-                _accountService.UpdateBalance(Model.CurrentBalance - Model.Amount, Model.PayerAccountNumber);
-
-                if (_accountService.IsValidAccount(Model.RecipientAccountNumber))
-                {
-                    AddTransactionToRecipient();
-                }
                 Close();
             }
-        }
-
-        private async void AddTransactionToRecipient()
-        {
-            var account = await _accountService.GetAccountByAccountNumber(Model.RecipientAccountNumber);
-
-            _transactionService.CreateTransaction(new TransactionModel
+            catch (Exception ex)
             {
-                AccountNumber = Model.RecipientAccountNumber,
-                Amount = Model.Amount,
-                SecondaryPartyAccountNumber = Model.PayerAccountNumber,
-                SecondaryPartyName = TransactionInfo.UserFullName,
-                BalanceAfterTransaction = account.Balance + Model.Amount,
-                Date = DateTime.UtcNow
-            });
-
-            _accountService.UpdateBalance(account.Balance + Model.Amount, Model.RecipientAccountNumber);
+                MessageBox.Show(ex.Message, "Payment failed");
+            }
         }
     }
 }

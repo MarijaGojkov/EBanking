@@ -28,7 +28,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
             }
         }
 
-        public async Task<Account> GetAccountByAccountNumber(string accountNumber)
+        public Account GetAccountByAccountNumber(string accountNumber)
         {
             Account account = new Account();
 
@@ -102,22 +102,18 @@ namespace EBanking.DataAccess.Repositories.Implementation
 
         public bool IsValidAccount(string accountNumber)
         {
-            object accountId;
-
             using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
-                    sqlCommand.CommandText = "SELECT * FROM Account WHERE accountNumber = @accountNumber";
+                    sqlCommand.CommandText = "SELECT 1 FROM Account WHERE accountNumber = @accountNumber";
                     sqlCommand.Parameters.AddWithValue("@accountNumber", accountNumber);
 
-                    accountId = sqlCommand.ExecuteScalar();
+                    return sqlCommand.ExecuteScalar() is not null;
                 }
             }
-
-            return accountId as string is not null;
         }
 
         public void UpdateBalance(decimal balance, string accountNumber)

@@ -7,6 +7,6 @@ namespace EBanking.Services
         List<AccountModel> GetAccountsForUser(int userId);
         void UpdateBalance(decimal newBalance, string accountNumber);
         bool IsValidAccount(string accountNumber);
-        Task<AccountModel> GetAccountByAccountNumber(string accountNumber);
+        AccountModel GetAccountByAccountNumber(string accountNumber);
     }
 }
