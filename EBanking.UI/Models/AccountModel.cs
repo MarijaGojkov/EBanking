@@ -5,7 +5,7 @@ namespace EBanking.UI.Models
     public class AccountModel : BaseModel
     {
         public string AccountNumber { get; set; }
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
         public string UserFullName { get; set; }
         public Services.Models.AccountModel SelectedAccount { get; set; }
         public List<Services.Models.AccountModel> Accounts { get; set; }

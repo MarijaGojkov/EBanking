@@ -108,7 +108,7 @@ namespace EBanking.Services.Implementation
             return _accountRepository.IsValidAccount(accountNumber);
         }
 
-        public void UpdateBalance(double newBalance, string accountNumber)
+        public void UpdateBalance(decimal newBalance, string accountNumber)
         {
             _accountRepository.UpdateBalance(newBalance, accountNumber);
         }

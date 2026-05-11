@@ -24,7 +24,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
                             exchangeRates.Add(new CurrencyExchange
                             {
                                 Currency = reader["currency"] as string,
-                                Value = decimal.ToDouble((decimal)reader["value"]),
+                                Value = (decimal)reader["value"],
                             });
                         }
                     }
