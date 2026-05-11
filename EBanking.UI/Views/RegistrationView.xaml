@@ -50,7 +50,7 @@
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="ACCOUNT ACTIVATION"
+                    <TextBlock Text="ACTIVATE ACCESS"
                                Foreground="DarkGray"
                                FontSize="10"
                                FontFamily="Montserrat"
@@ -129,9 +129,7 @@
                                FontFamily="Montserrat"
                                HorizontalAlignment="Center"
                                Padding="0,10,0,0"/>
-                    <TextBlock Text="Welcome!
-
-                               Enter your details to activate your account."
+                    <TextBlock Text="Use the e-mail and PIN your bank issued to set or reset your online banking password."
                                Foreground="LightGray"
                                FontSize="12"
                                FontWeight="Medium"
@@ -254,7 +252,7 @@
                            Margin="0,5,0,0"/>
                     <Button Command ="{Binding RegistrationCommand}"
                             BorderThickness="0"
-                            Content="ACTIVATE"
+                            Content="ACTIVATE ACCESS"
                             Foreground="White"
                             FontSize="12"
                             FontFamily="Montserrat"

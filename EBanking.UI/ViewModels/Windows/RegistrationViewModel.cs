@@ -13,7 +13,7 @@ namespace EBanking.UI.ViewModels.Windows
         public RegistrationViewModel(IUserService userService)
         {
             Validator = new RegistrationViewValidator<RegistrationModel>();
-            Model.Title = "Account Activation";
+            Model.Title = "Activate access";
             _userService = userService;
             RegistrationCommand = new RelayCommand(ActivateUser);
         }
