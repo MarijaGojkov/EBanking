@@ -1,11 +1,8 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EBanking.Services;
 using EBanking.UI.Common.Validation;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
-using System;
-using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
@@ -16,7 +13,7 @@ namespace EBanking.UI.ViewModels.Windows
         public RegistrationViewModel(IUserService userService)
         {
             Validator = new RegistrationViewValidator<RegistrationModel>();
-            Model.Title = "Registration";
+            Model.Title = "Account Activation";
             _userService = userService;
             RegistrationCommand = new RelayCommand(ActivateUser);
         }
@@ -31,28 +28,28 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void ActivateUser()
         {
-            if (Validator.ValidateModel(Model))
+            Model.FormError = "";
+
+            if (!Validator.ValidateModel(Model))
             {
-                if (_userService.VerifyUser(Model.Email, Model.UserPin))
-                {
-                    if (Model.Password.Equals(Model.ConfirmPassword))
-                    {
-                        _userService.UpdateUserPassword(Model.Email, Model.UserPin, Model.Password);
-
-                        ShowLoginWindow();
-
-                        Close();
-                    }
-                    else
-                    {
-                        Model.Label = "Passwords do not match";
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("User PIN and email do not match.", "Error");
-                }
+                return;
             }
+
+            if (!_userService.VerifyUser(Model.Email, Model.UserPin))
+            {
+                Model.FormError = "Email or activation PIN is not recognized.";
+                return;
+            }
+
+            if (!Model.Password.Equals(Model.ConfirmPassword))
+            {
+                Model.ConfirmPasswordError = "Passwords do not match";
+                return;
+            }
+
+            _userService.UpdateUserPassword(Model.Email, Model.UserPin, Model.Password);
+            ShowLoginWindow();
+            Close();
         }
     }
 }
