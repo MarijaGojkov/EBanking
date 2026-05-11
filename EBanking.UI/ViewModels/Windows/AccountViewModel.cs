@@ -4,6 +4,7 @@ using EBanking.Services.Models;
 using EBanking.UI.Views;
 using GalaSoft.MvvmLight.Ioc;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,10 +59,12 @@ namespace EBanking.UI.ViewModels.Windows
                 {
                     DataContext = new CurrencyExchangeViewModel(_transactionService, _accountService, _currencyExchangeService, Model.SelectedAccount, accounts, Model.UserFullName)
                 };
-                view.Closing += (s, o) =>
+                void OnCurrencyExchangeClosing(object? sender, CancelEventArgs e)
                 {
+                    view.Closing -= OnCurrencyExchangeClosing;
                     GetAccount(UserId);
-                };
+                }
+                view.Closing += OnCurrencyExchangeClosing;
                 view.Show();
             }
             else
@@ -75,7 +78,7 @@ namespace EBanking.UI.ViewModels.Windows
             Close();
         }
 
-        public async void Payment()
+        public void Payment()
         {
             if (Model.SelectedAccount is not null)
             {
@@ -85,10 +88,12 @@ namespace EBanking.UI.ViewModels.Windows
                                 new TransactionInfo { AccountNumber = Model.SelectedAccount.AccountNumber, CurrentBalance = Model.SelectedAccount.Balance,
                                     UserFullName = Model.Accounts.First().User.FirstName + " " + Model.Accounts.First().User.LastName })
                 };
-                view.Closing += (s, o) =>
+                void OnPaymentClosing(object? sender, CancelEventArgs e)
                 {
+                    view.Closing -= OnPaymentClosing;
                     GetAccount(UserId);
-                };
+                }
+                view.Closing += OnPaymentClosing;
                 view.Show();
             }
             else
