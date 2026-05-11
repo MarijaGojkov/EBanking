@@ -5,13 +5,11 @@ namespace EBanking.DataAccess.Repositories.Implementation
 {
     public class UserRepository : IUserRepository
     {
-        private const string _connectionString = @"Data Source = .\SQLEXPRESS;Initial Catalog=EBankingSystem;Integrated Security=True";
-
         public User GetUserById(int id)
         {
             User user = new User();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -44,7 +42,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             object userId;
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -65,7 +63,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             List<User> userList = new List<User>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -98,7 +96,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
 
         public int AddUser(User user)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -122,7 +120,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
 
         public void UpdateUserPassword(string email, string userPin, string password)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -142,7 +140,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             object userId;
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 

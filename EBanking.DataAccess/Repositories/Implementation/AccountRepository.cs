@@ -5,11 +5,9 @@ namespace EBanking.DataAccess.Repositories.Implementation
 {
     public class AccountRepository : IAccountRepository
     {
-        private const string _connectionString = @"Data Source = .\SQLEXPRESS;Initial Catalog=EBankingSystem;Integrated Security=True";
-
         public void CreateAccount(Account model)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -33,7 +31,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             Account account = new Account();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -64,7 +62,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             List<Account> accounts = new List<Account>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -105,7 +103,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             object accountId;
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -123,7 +121,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
 
         public void UpdateBalance(double balance, string accountNumber)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 

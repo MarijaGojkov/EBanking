@@ -5,11 +5,9 @@ namespace EBanking.DataAccess.Repositories.Implementation
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private const string _connectionString = @"Data Source = .\SQLEXPRESS;Initial Catalog=EBankingSystem;Integrated Security=True";
-
         public int CreateTransaction(Transaction transaction)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -34,7 +32,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             List<Transaction> transactionList = new List<Transaction>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
