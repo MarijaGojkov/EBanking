@@ -2,9 +2,9 @@ namespace EBanking.UI.Models
 {
     public class LoginModel : BaseModel
     {
-        public string Email { get; set; } = "123@gmail.com";
+        public string Email { get; set; } = "";
 
-        public string Password { get; set; } = "2222";
+        public string Password { get; set; } = "";
 
         #region Validation
         public string EmailError { get; set; }
