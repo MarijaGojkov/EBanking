@@ -15,16 +15,23 @@ GO
 
 -- ============================================================
 -- Users
--- Passwords are stored as plain text here for demo purposes.
+-- Passwords are stored as BCrypt hashes (work-factor 11). Demo
+-- credentials below are kept readable in this comment so a
+-- reviewer can log in; the column itself never contains plaintext.
+--   ana.petrovic@email.com    / password123
+--   marko.jovanovic@email.com / password456
+--   jelena.nikolic@email.com  / password789
+-- Hashes were generated with EBanking.TestConsole:
+--   dotnet run --project EBanking.TestConsole -- hash <password>
 -- ============================================================
 SET IDENTITY_INSERT [dbo].[User] ON;
 
 INSERT INTO [dbo].[User]
     ([userId], [firstName], [lastName], [dateOfBirth], [idCardNumber], [phone], [email], [userPin], [password])
 VALUES
-    (1, 'Ana',    'Petrovic',  '1990-03-15', 'ID100001', '+381641234567', 'ana.petrovic@email.com',    '1234', 'password123'),
-    (2, 'Marko',  'Jovanovic', '1985-07-22', 'ID100002', '+381651234567', 'marko.jovanovic@email.com', '5678', 'password456'),
-    (3, 'Jelena', 'Nikolic',   '1995-11-08', 'ID100003', '+381661234567', 'jelena.nikolic@email.com',  '9012', 'password789');
+    (1, 'Ana',    'Petrovic',  '1990-03-15', 'ID100001', '+381641234567', 'ana.petrovic@email.com',    '1234', '$2a$11$BrfMZu862HHa6HDo.RdwOuXJFU30i8vfs4np5ImZ48p6CexOcw7KC'),
+    (2, 'Marko',  'Jovanovic', '1985-07-22', 'ID100002', '+381651234567', 'marko.jovanovic@email.com', '5678', '$2a$11$Jqsw0dv0st46HNJBsK6hnOuQnpjM5x.pF3LZnr.PUQ/d9Y2cBbdva'),
+    (3, 'Jelena', 'Nikolic',   '1995-11-08', 'ID100003', '+381661234567', 'jelena.nikolic@email.com',  '9012', '$2a$11$E/eJKQnGgtfEs5xLfMsQRuf0RyCJ1EIsQMHF70Szv838vwN/YnE2e');
 
 SET IDENTITY_INSERT [dbo].[User] OFF;
 GO

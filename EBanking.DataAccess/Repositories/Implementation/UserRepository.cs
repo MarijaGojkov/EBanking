@@ -1,4 +1,5 @@
 using EBanking.DataAccess.Models;
+using EBanking.DataAccess.Security;
 using System.Data.SqlClient;
 
 namespace EBanking.DataAccess.Repositories.Implementation
@@ -40,23 +41,28 @@ namespace EBanking.DataAccess.Repositories.Implementation
 
         public int IsValidUser(string email, string password)
         {
-            object userId;
-
             using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
-                    sqlCommand.CommandText = "SELECT * FROM [User] WHERE email = @email AND password = @password";
+                    sqlCommand.CommandText = "SELECT userId, password FROM [User] WHERE email = @email";
                     sqlCommand.Parameters.AddWithValue("@email", email);
-                    sqlCommand.Parameters.AddWithValue("@password", password);
 
-                    userId = sqlCommand.ExecuteScalar();
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                        {
+                            return 0;
+                        }
+
+                        int userId = (int)reader["userId"];
+                        string storedHash = (string)reader["password"];
+                        return PasswordHasher.Verify(password, storedHash) ? userId : 0;
+                    }
                 }
             }
-            var id = userId == null ? 0 : (int)userId;
-            return id;
         }
 
         public List<User> GetAllUsers()
@@ -111,7 +117,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
                     sqlCommand.Parameters.AddWithValue("@phone", user.Phone);
                     sqlCommand.Parameters.AddWithValue("@email", user.Email);
                     sqlCommand.Parameters.AddWithValue("@userPin", user.UserPin);
-                    sqlCommand.Parameters.AddWithValue("@password", user.Password);
+                    sqlCommand.Parameters.AddWithValue("@password", PasswordHasher.Hash(user.Password));
 
                     return sqlCommand.ExecuteNonQuery();
                 }
@@ -127,11 +133,11 @@ namespace EBanking.DataAccess.Repositories.Implementation
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
                     sqlCommand.CommandText = "UPDATE [User] SET password = @password WHERE email = @email AND userPin = @userPin";
-                    sqlCommand.Parameters.AddWithValue("@password", password);
+                    sqlCommand.Parameters.AddWithValue("@password", PasswordHasher.Hash(password));
                     sqlCommand.Parameters.AddWithValue("@email", email);
                     sqlCommand.Parameters.AddWithValue("@userPin", userPin);
 
-                    sqlCommand.ExecuteScalar();
+                    sqlCommand.ExecuteNonQuery();
                 }
             }
         }
