@@ -45,33 +45,31 @@ namespace EBanking.DataAccess.Repositories.Implementation
                 decimal payerBalance = ReadBalanceWithUpdLock(connection, transaction, payerAccountNumber)
                     ?? throw new InvalidOperationException("Payer account not found.");
 
+                decimal recipientBalance = ReadBalanceWithUpdLock(connection, transaction, recipientAccountNumber)
+                    ?? throw new InvalidOperationException("Recipient account not found.");
+
                 if (payerBalance < amount)
                 {
                     throw new InvalidOperationException("Insufficient funds.");
                 }
 
                 UpdateBalanceByDelta(connection, transaction, payerAccountNumber, -amount);
-                decimal payerBalanceAfter = payerBalance - amount;
+                UpdateBalanceByDelta(connection, transaction, recipientAccountNumber, amount);
 
-                decimal? recipientBalance = ReadBalanceWithUpdLock(connection, transaction, recipientAccountNumber);
-                if (recipientBalance.HasValue)
-                {
-                    UpdateBalanceByDelta(connection, transaction, recipientAccountNumber, amount);
-                    InsertTransactionRow(
-                        connection, transaction,
-                        accountNumber: recipientAccountNumber,
-                        amount: amount,
-                        balanceAfter: recipientBalance.Value + amount,
-                        date: occurredAt,
-                        secondaryPartyName: payerFullName,
-                        secondaryPartyAccountNumber: payerAccountNumber);
-                }
+                InsertTransactionRow(
+                    connection, transaction,
+                    accountNumber: recipientAccountNumber,
+                    amount: amount,
+                    balanceAfter: recipientBalance + amount,
+                    date: occurredAt,
+                    secondaryPartyName: payerFullName,
+                    secondaryPartyAccountNumber: payerAccountNumber);
 
                 InsertTransactionRow(
                     connection, transaction,
                     accountNumber: payerAccountNumber,
                     amount: amount,
-                    balanceAfter: payerBalanceAfter,
+                    balanceAfter: payerBalance - amount,
                     date: occurredAt,
                     secondaryPartyName: recipientName,
                     secondaryPartyAccountNumber: recipientAccountNumber);
