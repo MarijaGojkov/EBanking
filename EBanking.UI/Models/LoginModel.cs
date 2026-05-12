@@ -1,12 +1,12 @@
-﻿namespace EBanking.UI.Models
+namespace EBanking.UI.Models
 {
     public class LoginModel : BaseModel
     {
-        public string Email { get; set; } = "123@gmail.com";
+        public string Email { get; set; } = "";
 
-        public string Password { get; set; } = "2222";
+        public string Password { get; set; } = "";
 
-        #region Validacija 
+        #region Validation
         public string EmailError { get; set; }
         public string PasswordError { get; set; }
         #endregion

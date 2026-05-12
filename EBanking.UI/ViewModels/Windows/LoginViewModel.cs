@@ -1,68 +1,71 @@
-﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Input;
 using EBanking.Services;
-using EBanking.UI.Common.Validacija;
+using EBanking.UI.Common.Validation;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
+using System.ComponentModel;
 using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
     public class LoginViewModel : BaseViewModel<LoginModel>
     {
-        private readonly IKorisnikService _korisnikService;
-        private readonly IRacunService _racunService;
-        private readonly ITransakcijaService _transakcijaService;
-        private readonly IMenjacnicaService _menjacnicaService;
+        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
+        private readonly ITransactionService _transactionService;
+        private readonly ICurrencyExchangeService _currencyExchangeService;
 
-        public LoginViewModel(IKorisnikService korisnikService, IRacunService racunService, ITransakcijaService transakcijaService, IMenjacnicaService menjacnicaService)
+        public LoginViewModel(IUserService userService, IAccountService accountService, ITransactionService transactionService, ICurrencyExchangeService currencyExchangeService)
         {
             Validator = new LoginViewValidator<LoginModel>();
-            _korisnikService = korisnikService;
-            _racunService = racunService;
-            _transakcijaService = transakcijaService;
+            _userService = userService;
+            _accountService = accountService;
+            _transactionService = transactionService;
 
             Model.Title = "Login";
 
             LoginCommand = new RelayCommand(Login);
-            OtvoriRegistracijuCommand = new RelayCommand(Registracija);
-            _transakcijaService = transakcijaService;
-            _menjacnicaService = menjacnicaService;
+            OpenRegistrationCommand = new RelayCommand(Registration);
+            _transactionService = transactionService;
+            _currencyExchangeService = currencyExchangeService;
         }
 
         public RelayCommand LoginCommand { get; set; }
 
-        public RelayCommand OtvoriRegistracijuCommand { get; set; }
+        public RelayCommand OpenRegistrationCommand { get; set; }
 
         public void Login()
         {
-            var idKorisnika = _korisnikService.Login(Model.Email, Model.Password);
-            if (idKorisnika == 0)
+            var userId = _userService.Login(Model.Email, Model.Password);
+            if (userId == 0)
             {
-                MessageBox.Show("Korisničko ime i lozinka se ne poklapaju.", "Greska");
+                MessageBox.Show("Username and password do not match.", "Error");
             }
-            if (Validator.ValidateModel(Model) && idKorisnika is not 0)
+            if (Validator.ValidateModel(Model) && userId is not 0)
             {
-                RacunView tekuciRacunView = new RacunView
+                AccountView accountView = new AccountView
                 {
-                    DataContext = new TekuciRacunViewModel(_racunService, _transakcijaService, _menjacnicaService, idKorisnika)
+                    DataContext = new AccountViewModel(_accountService, _transactionService, _currencyExchangeService, userId)
                 };
-                tekuciRacunView.Closing += (s, o) =>
+                void OnAccountViewClosing(object? sender, CancelEventArgs e)
                 {
+                    accountView.Closing -= OnAccountViewClosing;
                     LoginView view = new LoginView
                     {
                         DataContext = this
                     };
                     view.Show();
-                };
-                tekuciRacunView.Show();
+                }
+                accountView.Closing += OnAccountViewClosing;
+                accountView.Show();
                 Close();
             }
         }
 
-        public void Registracija()
+        public void Registration()
         {
-            RegistracijaView registracijaView = new RegistracijaView();
-            registracijaView.Show();
+            RegistrationView registrationView = new RegistrationView();
+            registrationView.Show();
             Close();
         }
     }

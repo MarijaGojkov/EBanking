@@ -1,18 +1,21 @@
-<Window x:Class="EBanking.UI.Views.LoginView"
+<Window x:Class="EBanking.UI.Views.PaymentView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EBanking.UI.Views"
         mc:Ignorable="d"
-        Title="{Binding Model.Title}" Height="600" Width="800"
+        DataContext="{Binding PaymentView, Source={StaticResource Locator}}"
+        Title="{Binding Model.Title}" Height="700" Width="400"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
-        MouseDown="Window_MouseDown"
-        DataContext="{Binding LoginView, Mode=OneWay, Source={StaticResource Locator}}">
+        MouseDown="Window_MouseDown">
+
+
+
     <Border CornerRadius="12">
         <Border.Background>
             <ImageBrush ImageSource="..\Resources\background2.jpg"/>
@@ -49,7 +52,7 @@
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="LOGIN"
+                    <TextBlock Text="PAYMENT"
                                Foreground="DarkGray"
                                FontSize="10"
                                FontFamily="Montserrat"
@@ -121,32 +124,26 @@
                             Grid.Row="1"
                             Orientation="Vertical"
                             Margin="0,35,0,0">
-                    <Image Source="..\Resources\banklogo.png"
-                           Width="100" Height="100"/>
-                    <TextBlock Text="eBanking"
+                    <TextBlock Text="From account:"
                                Foreground="White"
-                               FontSize="25"
+                               FontSize="15"
                                FontWeight="Medium"
                                FontFamily="Montserrat"
-                               HorizontalAlignment="Center"
+                               HorizontalAlignment="Left"
                                Padding="0,10,0,0"/>
-                    <TextBlock Text="Welcome!
-
-                               Please enter your details"
+                    <Label Content="{Binding Model.PayerAccountNumber}"
                                Foreground="LightGray"
-                               FontSize="12"
+                               FontSize="14"
                                FontWeight="Medium"
                                FontFamily="Montserrat"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"
                                Margin="0,5,0,0"/>
-                    <TextBlock Text="E-mail"
+                    <TextBlock Text="Recipient name"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
                                FontFamily="Montserrat"
                                Margin="0,30,0,0"/>
-                    <TextBox x:Name="txtEmail"
+                    <TextBox x:Name="txtRecipient"
                              FontSize="13"
                              FontWeight="Medium"
                              FontFamily="Montserrat"
@@ -158,25 +155,25 @@
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
                              Padding="10,0,0,0"
-                             Text="{Binding Model.Email, Mode=TwoWay}">
+                             Text="{Binding Model.RecipientName, Mode=TwoWay}">
                         <TextBox.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
-                    <Label Content="{Binding Model.EmailError, Mode=TwoWay}"
+                    <Label Content="{Binding Model.RecipientNameError, Mode=TwoWay}"
                            Foreground="Red"/>
-                    <TextBlock Text="Password"
+                    <TextBlock Text="Recipient account number"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
                                FontFamily="Montserrat"
                                Margin="0,15,0,0"/>
-                    <TextBox x:Name="txtPassword"
+                    <TextBox x:Name="txtRecipientAccountNumber"
                              FontSize="13"
                              FontWeight="Medium"
-                             FontFamily="pack://application:,,,/Resources/#password"
+                             FontFamily="Montserrat"
                              Foreground="Black"
                              CaretBrush="LightGray"
                              BorderBrush="Gray"
@@ -185,23 +182,102 @@
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
                              Padding="10,0,0,0"
-                             Text="{Binding Model.Password, Mode=TwoWay}">
+                             Text="{Binding Model.RecipientAccountNumber, Mode=TwoWay}">
                         <TextBox.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
                             </Style>
                         </TextBox.Resources>
                     </TextBox>
-                    <Label Content="{Binding Model.PasswordError, Mode=TwoWay}"
+                    <Label Content="{Binding Model.RecipientAccountNumberError, Mode=TwoWay}"
                            Foreground="Red"/>
-                    <Button Command ="{Binding LoginCommand}"
+                    <TextBlock Text="Reference number"
+                               Foreground="DarkGray"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"
+                               Margin="0,15,0,0"/>
+                    <TextBox x:Name="txtReferenceNumber"
+                             FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Gray"
+                             BorderThickness="0,0,0,1"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="0,5,0,0"
+                             Padding="10,0,0,0"
+                             Text="{Binding Model.ReferenceNumber, Mode=TwoWay}">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                    <TextBlock Text="Amount"
+                               Foreground="DarkGray"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"
+                               Margin="0,15,0,0"/>
+                    <TextBox x:Name="txtAmount"
+                             FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Gray"
+                             BorderThickness="0,0,0,1"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="0,5,0,0"
+                             Padding="10,0,0,0"
+                             Text="{Binding Model.Amount, Mode=TwoWay}">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                    <Label Content="{Binding Model.AmountError, Mode=TwoWay}"
+                           Foreground="Red"/>
+                    <TextBlock Text="Payment purpose"
+                               Foreground="DarkGray"
+                               FontSize="12"
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"
+                               Margin="0,15,0,0"/>
+                    <TextBox x:Name="txtPaymentPurpose"
+                             FontSize="13"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="Gray"
+                             BorderThickness="0,0,0,1"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="0,5,0,0"
+                             Padding="10,0,0,0"
+                             Text="{Binding Model.PaymentPurpose, Mode=TwoWay}">
+                        <TextBox.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </TextBox.Resources>
+                    </TextBox>
+                    <Label Content="{Binding Model.PaymentPurposeError, Mode=TwoWay}"
+                           Foreground="Red"/>
+                    <Button Command ="{Binding PaymentCommand}"
                             BorderThickness="0"
-                            Content="SIGN IN"
+                            Content="PAY"
                             Foreground="White"
                             FontSize="12"
                             FontFamily="Montserrat"
                             Cursor="Hand"
-                            Margin="0,50,0,0">
+                            Margin="0,30,0,0">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#462AD8"/>
@@ -223,29 +299,6 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                Margin="0,15,0,0">
-                        <TextBlock Text="First time logging in or forgot your password?"
-                               Foreground="DarkGray"
-                               FontSize="12"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"/>
-                        <Button Command="{Binding OpenRegistrationCommand}"
-                               Content="Activate access"
-                               Foreground="White"
-                               Background="transparent"
-                               BorderThickness="0"
-                               Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-
-                               FontSize="12"
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"
-                               Cursor="Hand"
-                               Margin="8,0,0,0"/>
-                    </StackPanel>
                 </StackPanel>
 
             </Grid>
