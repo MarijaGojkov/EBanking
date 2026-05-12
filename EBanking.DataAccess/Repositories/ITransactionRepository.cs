@@ -13,5 +13,12 @@ namespace EBanking.DataAccess.Repositories
             string recipientName,
             string payerFullName,
             DateTime occurredAt);
+        void ExecuteExchange(
+            string sourceAccountNumber,
+            string destinationAccountNumber,
+            decimal sourceAmount,
+            decimal destinationAmount,
+            string userFullName,
+            DateTime occurredAt);
     }
 }

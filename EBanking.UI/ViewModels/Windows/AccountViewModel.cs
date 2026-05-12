@@ -57,7 +57,7 @@ namespace EBanking.UI.ViewModels.Windows
                 var accounts = Model.Accounts.Where(x => x.AccountNumber != Model.SelectedAccount.AccountNumber).ToList();
                 CurrencyExchangeView view = new CurrencyExchangeView
                 {
-                    DataContext = new CurrencyExchangeViewModel(_transactionService, _accountService, _currencyExchangeService, Model.SelectedAccount, accounts, Model.UserFullName)
+                    DataContext = new CurrencyExchangeViewModel(_currencyExchangeService, Model.SelectedAccount, accounts, Model.UserFullName)
                 };
                 void OnCurrencyExchangeClosing(object? sender, CancelEventArgs e)
                 {

@@ -83,6 +83,60 @@ namespace EBanking.DataAccess.Repositories.Implementation
             }
         }
 
+        public void ExecuteExchange(
+            string sourceAccountNumber,
+            string destinationAccountNumber,
+            decimal sourceAmount,
+            decimal destinationAmount,
+            string userFullName,
+            DateTime occurredAt)
+        {
+            using var connection = new SqlConnection(DatabaseAccess.ConnectionString);
+            connection.Open();
+            using var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted);
+            try
+            {
+                decimal sourceBalance = ReadBalanceWithUpdLock(connection, transaction, sourceAccountNumber)
+                    ?? throw new InvalidOperationException("Source account not found.");
+
+                decimal destinationBalance = ReadBalanceWithUpdLock(connection, transaction, destinationAccountNumber)
+                    ?? throw new InvalidOperationException("Destination account not found.");
+
+                if (sourceBalance < sourceAmount)
+                {
+                    throw new InvalidOperationException("Insufficient funds.");
+                }
+
+                UpdateBalanceByDelta(connection, transaction, sourceAccountNumber, -sourceAmount);
+                UpdateBalanceByDelta(connection, transaction, destinationAccountNumber, destinationAmount);
+
+                InsertTransactionRow(
+                    connection, transaction,
+                    accountNumber: sourceAccountNumber,
+                    amount: sourceAmount,
+                    balanceAfter: sourceBalance - sourceAmount,
+                    date: occurredAt,
+                    secondaryPartyName: userFullName,
+                    secondaryPartyAccountNumber: destinationAccountNumber);
+
+                InsertTransactionRow(
+                    connection, transaction,
+                    accountNumber: destinationAccountNumber,
+                    amount: destinationAmount,
+                    balanceAfter: destinationBalance + destinationAmount,
+                    date: occurredAt,
+                    secondaryPartyName: userFullName,
+                    secondaryPartyAccountNumber: sourceAccountNumber);
+
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
         private static decimal? ReadBalanceWithUpdLock(SqlConnection conn, SqlTransaction tx, string accountNumber)
         {
             using var cmd = conn.CreateCommand();
