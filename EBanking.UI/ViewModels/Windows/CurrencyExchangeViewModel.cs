@@ -5,17 +5,12 @@ using GalaSoft.MvvmLight.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
 {
     public class CurrencyExchangeViewModel : BaseViewModel<UI.Models.CurrencyExchangeModel>
     {
-        private readonly ITransactionService _transactionService;
-        private readonly IAccountService _accountService;
         private readonly ICurrencyExchangeService _currencyExchangeService;
 
         [PreferredConstructor]
@@ -24,8 +19,7 @@ namespace EBanking.UI.ViewModels.Windows
             Model.Title = "Currency Exchange";
         }
 
-        public CurrencyExchangeViewModel(ITransactionService transactionService,
-            IAccountService accountService,
+        public CurrencyExchangeViewModel(
             ICurrencyExchangeService currencyExchangeService,
             AccountModel account,
             List<AccountModel> userAccounts,
@@ -35,8 +29,6 @@ namespace EBanking.UI.ViewModels.Windows
             Model.Account = account;
             Model.UserAccounts = userAccounts;
             Model.Accounts = new System.Collections.ObjectModel.ObservableCollection<AccountModel>(Model.UserAccounts);
-            _transactionService = transactionService;
-            _accountService = accountService;
             _currencyExchangeService = currencyExchangeService;
             ConvertCommand = new RelayCommand(Convert);
             ExecuteTransactionCommand = new RelayCommand(ExecuteTransaction);
@@ -69,44 +61,39 @@ namespace EBanking.UI.ViewModels.Windows
 
         public void ExecuteTransaction()
         {
-            if (Model.Account.Balance > Model.Amount)
+            if (Model.SelectedAccount is null)
             {
-                _transactionService.CreateTransaction(new TransactionModel
-                {
-                    AccountNumber = Model.Account.AccountNumber,
-                    Amount = Model.Amount,
-                    SecondaryPartyAccountNumber = Model.SelectedAccount.AccountNumber,
-                    SecondaryPartyName = UserFullName,
-                    BalanceAfterTransaction = Model.Account.Balance - Model.Amount,
-                    Date = DateTime.UtcNow
-                });
-
-                _accountService.UpdateBalance(Model.Account.Balance - Model.Amount, Model.Account.AccountNumber);
-
-                AddTransactionToRecipient();
-                Close();
+                MessageBox.Show("You have not selected an account");
+                return;
             }
-            else
+            if (Model.Amount <= 0)
+            {
+                MessageBox.Show("Enter an amount greater than zero");
+                return;
+            }
+            if (Model.Account.Balance < Model.Amount)
             {
                 MessageBox.Show("Insufficient funds on the account");
+                return;
+            }
+
+            try
+            {
+                _currencyExchangeService.Exchange(new ExchangeRequest
+                {
+                    SourceAccountNumber = Model.Account.AccountNumber,
+                    DestinationAccountNumber = Model.SelectedAccount.AccountNumber,
+                    Amount = Model.Amount,
+                    SourceCurrency = Model.Account.Currency,
+                    DestinationCurrency = Model.SelectedAccount.Currency,
+                    UserFullName = UserFullName,
+                });
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Exchange failed");
             }
         }
-
-        private void AddTransactionToRecipient()
-        {
-            _transactionService.CreateTransaction(new TransactionModel
-            {
-                AccountNumber = Model.SelectedAccount.AccountNumber,
-                Amount = Model.ConvertedValue,
-                SecondaryPartyAccountNumber = Model.Account.AccountNumber,
-                SecondaryPartyName = UserFullName,
-                BalanceAfterTransaction = Model.SelectedAccount.Balance + Model.ConvertedValue,
-                Date = DateTime.UtcNow
-            });
-
-            _accountService.UpdateBalance(Model.SelectedAccount.Balance + Model.ConvertedValue, Model.SelectedAccount.AccountNumber);
-        }
     }
-
-
 }

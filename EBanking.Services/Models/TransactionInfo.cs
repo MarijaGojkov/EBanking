@@ -4,6 +4,6 @@ namespace EBanking.Services.Models
     {
         public string AccountNumber { get; set; }
         public string UserFullName { get; set; }
-        public double CurrentBalance { get; set; }
+        public decimal CurrentBalance { get; set; }
     }
 }

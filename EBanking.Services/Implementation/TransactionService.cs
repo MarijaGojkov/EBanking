@@ -13,6 +13,30 @@ namespace EBanking.Services.Implementation
             _transactionRepository = transactionRepository;
         }
 
+        public void TransferFunds(TransferRequest request)
+        {
+            if (request is null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+            if (request.Amount <= 0)
+            {
+                throw new ArgumentException("Amount must be greater than zero.", nameof(request));
+            }
+            if (string.Equals(request.PayerAccountNumber, request.RecipientAccountNumber, StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException("Cannot transfer to the same account.");
+            }
+
+            _transactionRepository.ExecuteTransfer(
+                payerAccountNumber: request.PayerAccountNumber,
+                recipientAccountNumber: request.RecipientAccountNumber,
+                amount: request.Amount,
+                recipientName: request.RecipientName,
+                payerFullName: request.PayerFullName,
+                occurredAt: DateTime.UtcNow);
+        }
+
         public void CreateTransaction(TransactionModel transactionModel)
         {
             _transactionRepository.CreateTransaction(new Transaction

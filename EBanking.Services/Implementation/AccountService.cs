@@ -17,9 +17,9 @@ namespace EBanking.Services.Implementation
             _currencyExchangeRepository = currencyExchangeRepository;
         }
 
-        public async Task<AccountModel> GetAccountByAccountNumber(string accountNumber)
+        public AccountModel GetAccountByAccountNumber(string accountNumber)
         {
-            Account account = await _accountRepository.GetAccountByAccountNumber(accountNumber);
+            Account account = _accountRepository.GetAccountByAccountNumber(accountNumber);
 
             return new AccountModel
             {
@@ -108,7 +108,7 @@ namespace EBanking.Services.Implementation
             return _accountRepository.IsValidAccount(accountNumber);
         }
 
-        public void UpdateBalance(double newBalance, string accountNumber)
+        public void UpdateBalance(decimal newBalance, string accountNumber)
         {
             _accountRepository.UpdateBalance(newBalance, accountNumber);
         }

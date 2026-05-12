@@ -5,13 +5,11 @@ namespace EBanking.DataAccess.Repositories.Implementation
 {
     public class CurrencyExchangeRepository : ICurrencyExchangeRepository
     {
-        private const string _connectionString = @"Data Source = .\SQLEXPRESS;Initial Catalog=EBankingSystem;Integrated Security=True";
-
         public List<CurrencyExchange> GetExchangeRatesByCurrency(string currency)
         {
             List<CurrencyExchange> exchangeRates = new List<CurrencyExchange>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -26,7 +24,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
                             exchangeRates.Add(new CurrencyExchange
                             {
                                 Currency = reader["currency"] as string,
-                                Value = decimal.ToDouble((decimal)reader["value"]),
+                                Value = (decimal)reader["value"],
                             });
                         }
                     }

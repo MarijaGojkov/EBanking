@@ -8,9 +8,14 @@ namespace EBanking.UI.Common.Validation
         {
             int errors = 0;
 
-            if (model.RecipientAccountNumber == null || model.RecipientAccountNumber == "")
+            if (string.IsNullOrEmpty(model.RecipientAccountNumber))
             {
                 model.RecipientAccountNumberError = "You have not entered the recipient's account number";
+                errors++;
+            }
+            else if (model.RecipientAccountNumber == model.PayerAccountNumber)
+            {
+                model.RecipientAccountNumberError = "Cannot transfer to the same account";
                 errors++;
             }
             else
@@ -18,7 +23,7 @@ namespace EBanking.UI.Common.Validation
                 model.RecipientAccountNumberError = null;
             }
 
-            if (model.RecipientName == null || model.RecipientName == "")
+            if (string.IsNullOrEmpty(model.RecipientName))
             {
                 model.RecipientNameError = "You have not entered the recipient's name";
                 errors++;
@@ -28,9 +33,14 @@ namespace EBanking.UI.Common.Validation
                 model.RecipientNameError = null;
             }
 
-            if (model.Amount == null || model.Amount <= 0)
+            if (model.Amount <= 0)
             {
                 model.AmountError = "You have not entered the amount";
+                errors++;
+            }
+            else if (model.Amount > model.CurrentBalance)
+            {
+                model.AmountError = "Insufficient funds";
                 errors++;
             }
             else

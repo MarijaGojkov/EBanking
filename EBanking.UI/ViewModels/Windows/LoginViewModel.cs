@@ -3,6 +3,7 @@ using EBanking.Services;
 using EBanking.UI.Common.Validation;
 using EBanking.UI.Models;
 using EBanking.UI.Views;
+using System.ComponentModel;
 using System.Windows;
 
 namespace EBanking.UI.ViewModels.Windows
@@ -46,14 +47,16 @@ namespace EBanking.UI.ViewModels.Windows
                 {
                     DataContext = new AccountViewModel(_accountService, _transactionService, _currencyExchangeService, userId)
                 };
-                accountView.Closing += (s, o) =>
+                void OnAccountViewClosing(object? sender, CancelEventArgs e)
                 {
+                    accountView.Closing -= OnAccountViewClosing;
                     LoginView view = new LoginView
                     {
                         DataContext = this
                     };
                     view.Show();
-                };
+                }
+                accountView.Closing += OnAccountViewClosing;
                 accountView.Show();
                 Close();
             }

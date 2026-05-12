@@ -3,12 +3,12 @@ namespace EBanking.UI.Models
     public class PaymentModel : BaseModel
     {
         public string PayerAccountNumber { get; set; }
-        public double CurrentBalance { get; set; }
+        public decimal CurrentBalance { get; set; }
         public string RecipientName { get; set; }
         public string RecipientAccountNumber { get; set; }
         public string ReferenceNumber { get; set; }
         public string PaymentPurpose { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
 
         #region Validation
         public string PayerAccountNumberError { get; set; }

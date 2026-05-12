@@ -50,7 +50,7 @@
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="REGISTRATION"
+                    <TextBlock Text="ACTIVATE ACCESS"
                                Foreground="DarkGray"
                                FontSize="10"
                                FontFamily="Montserrat"
@@ -129,9 +129,7 @@
                                FontFamily="Montserrat"
                                HorizontalAlignment="Center"
                                Padding="0,10,0,0"/>
-                    <TextBlock Text="Welcome!
-
-                               Enter your details to activate your account."
+                    <TextBlock Text="Use the e-mail and PIN your bank issued to set or reset your online banking password."
                                Foreground="LightGray"
                                FontSize="12"
                                FontWeight="Medium"
@@ -139,7 +137,7 @@
                                TextWrapping="Wrap"
                                TextAlignment="Center"
                                Margin="0,5,0,0"/>
-                    <TextBlock Text="E-mail"
+                    <TextBlock Text="Bank e-mail"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
@@ -166,7 +164,7 @@
                     </TextBox>
                     <Label Content="{Binding Model.EmailError, Mode=TwoWay}"
                            Foreground="Red"/>
-                    <TextBlock Text="User PIN"
+                    <TextBlock Text="Activation PIN"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
@@ -193,7 +191,7 @@
                     </TextBox>
                     <Label Content="{Binding Model.UserPinError, Mode=TwoWay}"
                            Foreground="Red"/>
-                    <TextBlock Text="Password"
+                    <TextBlock Text="New password"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
@@ -220,7 +218,7 @@
                     </TextBox>
                     <Label Content="{Binding Model.PasswordError, Mode=TwoWay}"
                            Foreground="Red"/>
-                    <TextBlock Text="Confirm password"
+                    <TextBlock Text="Confirm new password"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontWeight="Medium"
@@ -247,9 +245,14 @@
                     </TextBox>
                     <Label Content="{Binding Model.ConfirmPasswordError, Mode=TwoWay}"
                            Foreground="Red"/>
+                    <Label Content="{Binding Model.FormError}"
+                           Foreground="Red"
+                           HorizontalAlignment="Center"
+                           HorizontalContentAlignment="Center"
+                           Margin="0,5,0,0"/>
                     <Button Command ="{Binding RegistrationCommand}"
                             BorderThickness="0"
-                            Content="REGISTER"
+                            Content="ACTIVATE ACCESS"
                             Foreground="White"
                             FontSize="12"
                             FontFamily="Montserrat"

@@ -1,15 +1,14 @@
 using EBanking.DataAccess.Models;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace EBanking.DataAccess.Repositories.Implementation
 {
     public class AccountRepository : IAccountRepository
     {
-        private const string _connectionString = @"Data Source = .\SQLEXPRESS;Initial Catalog=EBankingSystem;Integrated Security=True";
-
         public void CreateAccount(Account model)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -19,21 +18,21 @@ namespace EBanking.DataAccess.Repositories.Implementation
                         "VALUES(@accountNumber, @userId, @balance, @currency, @type, @dateCreated)";
                     sqlCommand.Parameters.AddWithValue("@accountNumber", model.AccountNumber);
                     sqlCommand.Parameters.AddWithValue("@userId", model.UserId);
-                    sqlCommand.Parameters.AddWithValue("@balance", model.Balance);
+                    sqlCommand.Parameters.Add(new SqlParameter("@balance", SqlDbType.Decimal) { Precision = 18, Scale = 2, Value = model.Balance });
                     sqlCommand.Parameters.AddWithValue("@currency", model.Currency);
                     sqlCommand.Parameters.AddWithValue("@type", model.Type);
                     sqlCommand.Parameters.AddWithValue("@dateCreated", model.DateCreated);
 
-                    sqlCommand.ExecuteScalar();
+                    sqlCommand.ExecuteNonQuery();
                 }
             }
         }
 
-        public async Task<Account> GetAccountByAccountNumber(string accountNumber)
+        public Account GetAccountByAccountNumber(string accountNumber)
         {
             Account account = new Account();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -48,7 +47,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
                         {
                             account.UserId = (int)reader["userId"];
                             account.AccountNumber = reader["accountNumber"] as string;
-                            account.Balance = decimal.ToDouble((decimal)reader["balance"]);
+                            account.Balance = (decimal)reader["balance"];
                             account.DateCreated = (DateTime)reader["dateCreated"];
                             account.Type = reader["type"] as string;
                             account.Currency = reader["currency"] as string;
@@ -64,7 +63,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
         {
             List<Account> accounts = new List<Account>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
@@ -81,7 +80,7 @@ namespace EBanking.DataAccess.Repositories.Implementation
                             {
                                 UserId = (int)reader["userId"],
                                 AccountNumber = reader["accountNumber"] as string,
-                                Balance = decimal.ToDouble((decimal)reader["balance"]),
+                                Balance = (decimal)reader["balance"],
                                 DateCreated = (DateTime)reader["dateCreated"],
                                 Type = reader["type"] as string,
                                 Currency = reader["currency"] as string,
@@ -103,37 +102,33 @@ namespace EBanking.DataAccess.Repositories.Implementation
 
         public bool IsValidAccount(string accountNumber)
         {
-            object accountId;
-
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
-                    sqlCommand.CommandText = "SELECT * FROM Account WHERE accountNumber = @accountNumber";
+                    sqlCommand.CommandText = "SELECT 1 FROM Account WHERE accountNumber = @accountNumber";
                     sqlCommand.Parameters.AddWithValue("@accountNumber", accountNumber);
 
-                    accountId = sqlCommand.ExecuteScalar();
+                    return sqlCommand.ExecuteScalar() is not null;
                 }
             }
-
-            return accountId as string is not null;
         }
 
-        public void UpdateBalance(double balance, string accountNumber)
+        public void UpdateBalance(decimal balance, string accountNumber)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(DatabaseAccess.ConnectionString))
             {
                 sqlConnection.Open();
 
                 using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
                 {
                     sqlCommand.CommandText = "UPDATE Account SET balance = @balance WHERE accountNumber = @accountNumber";
-                    sqlCommand.Parameters.AddWithValue("@balance", balance);
+                    sqlCommand.Parameters.Add(new SqlParameter("@balance", SqlDbType.Decimal) { Precision = 18, Scale = 2, Value = balance });
                     sqlCommand.Parameters.AddWithValue("@accountNumber", accountNumber);
 
-                    sqlCommand.ExecuteScalar();
+                    sqlCommand.ExecuteNonQuery();
                 }
             }
         }

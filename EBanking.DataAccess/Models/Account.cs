@@ -4,7 +4,7 @@ namespace EBanking.DataAccess.Models
     {
         public string AccountNumber { get; set; }
         public int UserId { get; set; }
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
         public string Type { get; set; }
         public string Currency { get; set; }
         public DateTime DateCreated { get; set; }
